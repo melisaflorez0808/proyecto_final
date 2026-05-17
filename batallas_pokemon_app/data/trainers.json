@@ -1,0 +1,22 @@
+{
+  "melisa": {
+    "clave": "123",
+    "victorias": null,
+    "monedas_actuales": null,
+    "monedas_acumuladas": null,
+    "equipo_activo": null,
+    "inventario": {},
+    "sobres_pendientes": {},
+    "equipos": {}
+  },
+  "santiago": {
+    "clave": "456",
+    "victorias": null,
+    "monedas_actuales": null,
+    "monedas_acumuladas": null,
+    "equipo_activo": null,
+    "inventario": {},
+    "sobres_pendientes": {},
+    "equipos": {}
+  }
+}
