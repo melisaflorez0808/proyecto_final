@@ -1,22 +1,48 @@
 {
-  "melisa": {
+  "carlos": {
     "clave": "123",
-    "victorias": null,
-    "monedas_actuales": null,
-    "monedas_acumuladas": null,
+    "victorias": 5,
+    "monedas_actuales": 500,
+    "monedas_acumuladas": 1500,
     "equipo_activo": null,
-    "inventario": {},
-    "sobres_pendientes": {},
-    "equipos": {}
-  },
-  "santiago": {
-    "clave": "456",
-    "victorias": null,
-    "monedas_actuales": null,
-    "monedas_acumuladas": null,
-    "equipo_activo": null,
-    "inventario": {},
-    "sobres_pendientes": {},
-    "equipos": {}
+
+    "inventario": {
+      "48291": {
+        "especie": "charmander",
+        "dueno_original": "carlos",
+        "rareza": "comun",
+        "ataque": 53,
+        "defensa": 44,
+        "velocidad": 66,
+        "movimientos": [
+          { "nombre": "ascuas", "tipo": "fuego", "poder_base": 30 },
+          { "nombre": "placaje", "tipo": "normal", "poder_base": 35 }
+        ]
+      },
+
+      "71834": {
+        "especie": "pikachu",
+        "dueno_original": "carlos",
+        "rareza": "raro",
+        "ataque": 63,
+        "defensa": 46,
+        "velocidad": 104,
+        "movimientos": [
+          { "nombre": "impactrueno", "tipo": "electrico", "poder_base": 65 },
+          { "nombre": "chispa", "tipo": "electrico", "poder_base": 50 }
+        ]
+      }
+    },
+
+    "sobres_pendientes": {
+      "sp1": { "tipo": "basico" },
+      "sp2": { "tipo": "avanzado" }
+    },
+
+    "equipos": {
+      "equipo_1": {
+        "pokemones": ["48291", "71834"]
+      }
+    }
   }
 }

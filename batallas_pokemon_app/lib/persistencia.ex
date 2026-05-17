@@ -81,9 +81,9 @@ defmodule Persistencia do
               monedas_actuales: datos["monedas_actuales"],
               monedas_acumuladas: datos["monedas_acumuladas"],
               equipo_activo: datos["equipo_activo"],
-              inventario: leer_pokemones_instanciados(datos["inventario"]),
-              sobres_pendientes: leer_sobres_pendientes(datos["sobres_pendientes"]),
-              equipos: leer_equipos(datos["equipos"])
+              inventario: leer_pokemones_instanciados(datos["inventario"] || %{}),
+              sobres_pendientes: leer_sobres_pendientes(datos["sobres_pendientes"] || %{}),
+              equipos: leer_equipos(datos["equipos"] || %{})
             }
           }
         end)
@@ -96,6 +96,15 @@ defmodule Persistencia do
 
   def leer_pokemones_instanciados(contenido) do
     Enum.map(contenido, fn {id, pokemon} ->
+      movimientos =
+        Enum.map(pokemon["movimientos"], fn mov ->
+          %Movimiento{
+            nombre: mov["nombre"],
+            tipo: mov["tipo"],
+            poder_base: mov["poder_base"]
+          }
+        end)
+
       {
         id,
         %PokemonInstancia{
@@ -105,7 +114,7 @@ defmodule Persistencia do
           ataque: pokemon["ataque"],
           defensa: pokemon["defensa"],
           velocidad: pokemon["velocidad"],
-          movimientos: pokemon["movimientos"]
+          movimientos: movimientos
         }
       }
     end)
@@ -113,11 +122,11 @@ defmodule Persistencia do
   end
 
   def leer_sobres_pendientes(contenido) do
-    Enum.map(contenido, fn {id, tipo} ->
+    Enum.map(contenido, fn {id, sobre} ->
       {
         id,
         %SobrePendiente{
-          tipo: tipo
+          tipo: sobre["tipo"]
         }
       }
     end)
@@ -157,11 +166,19 @@ defmodule Persistencia do
                     ataque: pokemon.ataque,
                     defensa: pokemon.defensa,
                     velocidad: pokemon.velocidad,
-                    movimientos: pokemon.movimientos
+                    movimientos:
+                      Enum.map(pokemon.movimientos, fn mov ->
+                        %{
+                          nombre: mov.nombre,
+                          tipo: mov.tipo,
+                          poder_base: mov.poder_base
+                        }
+                      end)
                   }
                 }
               end)
-              |>Map.new(),
+              |> Map.new(),
+
             sobres_pendientes:
               Enum.map(datos.sobres_pendientes, fn {id, sobre} ->
                 {
@@ -182,7 +199,7 @@ defmodule Persistencia do
                   }
                 }
               end)
-              |>Map.new()
+              |> Map.new()
           }
         }
       end)
