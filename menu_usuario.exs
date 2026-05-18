@@ -21,19 +21,26 @@ defmodule Usuario do
   end
 
   def iniciar do
-    usuario = login()
-    loop_principal(usuario)
+    pid = login()
+    loop_principal(pid)
+    logout(pid)
   end
 
   defp login do
+    Util.imprimir_mensaje("Ingrese sus datos para acceder al sistema: ")
     usuario = Util.leer("Usuario: ", :string)
     clave = Util.leer("Clave: ", :string)
 
     case GenServer.call({Servidor, @nodo_servidor}, {:login, usuario, clave, self()}) do
-      {:ok, _user} ->
-        #Retorno al usuario para seguir trabajando con él
-        Util.imprimir_mensaje("Ingreso Correcto de Usuario")
-        usuario
+      {:ok, :existente} ->
+        #Retorno el pid del usuario, que esta guardado en sesiones del estado del servidor
+        Util.imprimir_mensaje("Ingreso Correcto de Usuario #{usuario}")
+        self()
+
+      {:ok, _nuevo} ->
+        #Retorno el pid del usuario, que esta guardado en sesiones del estado del servidor
+        Util.imprimir_mensaje("Se registró el Usuario #{usuario} ¡¡Recibe como premio Sobre de Regalo!!")
+        self()
 
       {:error, :clave_incorrecta} ->
         Util.imprimir_error("Clave incorrecta")
@@ -41,7 +48,20 @@ defmodule Usuario do
     end
   end
 
-  defp loop_principal(usuario) do
+  defp logout(pid) do
+
+    case GenServer.call({Servidor, @nodo_servidor}, {:logout, pid}) do
+      {:error, :usuario_no_logueado} ->
+        Util.imprimir_mensaje("El usuario nunca estuvo logueado")
+
+      {:ok,:finalizado} ->
+        Util.imprimir_mensaje("Sesión finalizada correctamente...")
+        self()
+    end
+
+  end
+
+  defp loop_principal(pid) do
     Util.imprimir_mensaje("""
 
     ------------- MENÚ PRINCIPAL -------------
@@ -59,25 +79,25 @@ defmodule Usuario do
 
     case opcion do
       1 ->
-        MenuPerfil.mostrar(usuario, self())
-        loop_principal(usuario)
+        MenuPerfil.mostrar(pid)
+        loop_principal(pid)
       #2 ->
-      #  MenuTienda.mostrar(usuario)
-      #  loop_principal(usuario)
+      #  MenuTienda.mostrar(pid)
+      #  loop_principal(pid)
       #3 ->
-      # MenuIntercambio.mostrar(usuario)
-      #  loop_principal(usuario)
-      #4 ->
-      #  MenuEquipos.mostrar(usuario)
-      #  loop_principal(usuario)
+      # MenuIntercambio.mostrar(pid)
+      #  loop_principal(pid)
+      4 ->
+        MenuEquipos.mostrar(pid)
+        loop_principal(pid)
       #5 ->
-      #  MenuSalasBatalla.mostrar(usuario)
-      #  loop_principal(usuario)
+      #  MenuSalasBatalla.mostrar(pid)
+      #  loop_principal(pid)
       6 ->
         Util.imprimir_mensaje("Saliendo......")
       _ ->
         Util.imprimir_error("Opción inválida. Intente Nuevamente")
-        loop_principal(usuario)
+        loop_principal(pid)
     end
   end
 end

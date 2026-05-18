@@ -38,7 +38,7 @@ defmodule Servidor do
     {:ok, estado}
   end
 
-  #Login
+  #-------------------- Login ---------------------------------------
   @impl true
   def handle_call({:login, usuario, clave, pid}, _from, estado) do
 
@@ -69,15 +69,44 @@ defmodule Servidor do
 
       existente ->
         if existente.clave == clave do
-          {:reply, {:ok, existente}, estado}
+            sesiones_actualizadas =
+            Map.put(estado.sesiones, pid, usuario)
+
+          nuevo_estado = %{estado | sesiones: sesiones_actualizadas}
+
+          IO.inspect(nuevo_estado.sesiones, label: "Sesiones en Servidor:\n")
+          {:reply, {:ok, :existente}, nuevo_estado}
+
         else
           {:reply, {:error, :clave_incorrecta}, estado}
         end
     end
   end
 
-  #-------------------- Perfil ---------------------------------------
-  def handle_call({:ver_perfil, usuario, _pid}, _from, estado) do
+  #-------------------- Logout ---------------------------------------
+
+  @impl true
+  def handle_call({:logout, pid}, _from, estado) do
+
+    case Map.get(estado.sesiones, pid) do
+      nil ->
+        {:reply, {:error, :usuario_no_logueado}, estado}
+
+      _valor ->
+        sesiones_actualizadas =
+          Map.delete(estado.sesiones,pid)
+
+          nuevo_estado = %{estado | sesiones: sesiones_actualizadas}
+
+          IO.inspect(nuevo_estado.sesiones, label: "Sesiones en Servidor:\n")
+          {:reply,{:ok,:finalizado}, nuevo_estado}
+    end
+  end
+
+
+  #-------------------- Perfil, Inventario y Clasificacion----------------------------------
+  def handle_call({:ver_perfil,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
     case Map.get(estado.entrenadores, usuario) do
       nil ->
         {:reply, nil, estado}
@@ -88,7 +117,8 @@ defmodule Servidor do
     end
   end
 
-  def handle_call({:ver_inventario, usuario, pid}, _from, estado) do
+  def handle_call({:ver_inventario,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
     case Map.get(estado.entrenadores, usuario) do
       nil ->
         {:reply, nil, estado}
@@ -99,36 +129,99 @@ defmodule Servidor do
     end
   end
 
-  def handle_call({:generar_clasificacion, usuario, pid}, _from, estado) do
+  def handle_call({:ver_equipos,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
     case Map.get(estado.entrenadores, usuario) do
       nil ->
         {:reply, nil, estado}
 
       entrenador ->
+        respuesta = GestionEquipos.listar_equipos(entrenador)
+        {:reply, respuesta, estado}
+    end
+  end
+
+  def handle_call({:generar_clasificacion,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, nil, estado}
+
+      _entrenador ->
         respuesta = GestionPerfil.generar_clasificacion(estado.entrenadores)
         {:reply, respuesta, estado}
     end
   end
 
+  #-------------------- Tienda y Sobres-----------------------------------
 
-  ##SOLO POR PROBAR
 
-  @impl true
-  def handle_call({:agregar_usuario,{nombre,clave}}, _from, estado) do
-    IO.puts("Usuario agregado #{nombre}")
 
-    entrenadores_actualizados=
-      Map.put(estado.entrenadores, nombre, %Entrenador{clave: clave})
 
-    nuevo_estado =
-      Map.put(
-        estado,
-        :entrenadores,
-        entrenadores_actualizados
-      )
-      Persistencia.escribir_entrenador(entrenadores_actualizados)
 
-    {:reply, "Usuario agregado", nuevo_estado}
+  #------------------ Intercambio Pokemon---------------------------------
+
+
+
+
+
+
+
+  #----------------------- Equipos Pokemon -------------------------------
+  def handle_call({:crear_equipo,nombre,ids,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    entrenador=estado.entrenadores[usuario]
+
+    case GestionEquipos.crear_equipo(nombre,ids,entrenador) do
+
+      {:equipo_creado,entrenador_actualizado} ->
+        entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
+        nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
+        Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+        {:reply, "Equipo creado", nuevo_estado}
+
+      {:error, :nombre_equipo_duplicado} ->
+        {:reply, "El nombre del equipo ya existe", estado}
+
+      {:error,razon} ->
+        {:reply, razon, estado}
+    end
   end
+
+  def handle_call({:quitar_pokemon_equipo,nombre_equipo,id_pokemon,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    entrenador=estado.entrenadores[usuario]
+
+    case GestionEquipos.quitar_pokemon_equipo(nombre_equipo,id_pokemon,entrenador) do
+
+      {:pokemon_eliminado,entrenador_actualizado} ->
+        entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
+        nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
+        Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+        {:reply, "pokemon con #{id_pokemon} eliminado del equipo", nuevo_estado}
+
+      {:error, razon}->
+        {:reply, razon, estado}
+    end
+  end
+
+  def handle_call({:agregar_pokemon_equipo,nombre_equipo,id_pokemon,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    entrenador=estado.entrenadores[usuario]
+
+    case GestionEquipos.agregar_pokemon_equipo(nombre_equipo,id_pokemon,entrenador) do
+
+      {:pokemon_agregado,entrenador_actualizado} ->
+        entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
+        nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
+        Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+        {:reply, "pokemon con #{id_pokemon} agregado al equipo", nuevo_estado}
+
+      {:error, razon}->
+        {:reply, razon, estado}
+    end
+  end
+
+   #------------------ Salas de Batalla ---------------------------------
 
 end

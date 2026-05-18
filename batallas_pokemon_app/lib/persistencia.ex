@@ -134,11 +134,11 @@ defmodule Persistencia do
   end
 
   def leer_equipos(contenido) do
-    Enum.map(contenido, fn {nombre, pokemones} ->
+    Enum.map(contenido, fn {nombre, equipo} ->
       {
         nombre,
         %Equipo{
-          pokemones: pokemones
+          pokemones: equipo["pokemones"]
         }
       }
     end)

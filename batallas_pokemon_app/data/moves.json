@@ -1,90 +1,138 @@
 {
   "Fuego": [
-    {"nombre": "ascuas", "tipo": "Fuego", "poder_base": 30},
+    {"nombre": "ascuas", "tipo": "Fuego", "poder_base": 62},
     {"nombre": "llamarada", "tipo": "Fuego", "poder_base": 110},
-    {"nombre": "giro_fuego", "tipo": "Fuego", "poder_base": 35},
-    {"nombre": "lanzallamas", "tipo": "Fuego", "poder_base": 90},
-    {"nombre": "colmillo_igneo", "tipo": "Fuego", "poder_base": 65},
-    {"nombre": "nitrocarga", "tipo": "Fuego", "poder_base": 30}
+    {"nombre": "giro_fuego", "tipo": "Fuego", "poder_base": 76},
+    {"nombre": "lanzallamas", "tipo": "Fuego", "poder_base": 42},
+    {"nombre": "colmillo_igneo", "tipo": "Fuego", "poder_base": 85},
+    {"nombre": "sofoco", "tipo": "Fuego", "poder_base": 97}
   ],
   "Agua": [
-    {"nombre": "pistola_agua", "tipo": "Agua", "poder_base": 40},
-    {"nombre": "hidrobomba", "tipo": "Agua", "poder_base": 110},
+    {"nombre": "pistola_agua", "tipo": "Agua", "poder_base": 34},
+    {"nombre": "hidrobomba", "tipo": "Agua", "poder_base": 78},
     {"nombre": "acua_jet", "tipo": "Agua", "poder_base": 40},
-    {"nombre": "surf", "tipo": "Agua", "poder_base": 90},
-    {"nombre": "rayo_burbuja", "tipo": "Agua", "poder_base": 65},
+    {"nombre": "surf", "tipo": "Agua", "poder_base": 52},
+    {"nombre": "rayo_burbuja", "tipo": "Agua", "poder_base": 121},
     {"nombre": "cascada", "tipo": "Agua", "poder_base": 80}
   ],
   "Planta": [
-    {"nombre": "latigo_cepa", "tipo": "Planta", "poder_base": 45},
-    {"nombre": "hoja_afilada", "tipo": "Planta", "poder_base": 55},
-    {"nombre": "rayo_solar", "tipo": "Planta", "poder_base": 120},
-    {"nombre": "drenadoras", "tipo": "Planta", "poder_base": 40},
-    {"nombre": "bomba_germen", "tipo": "Planta", "poder_base": 80},
-    {"nombre": "energia_bola", "tipo": "Planta", "poder_base": 90}
+    {"nombre": "latigo_cepa", "tipo": "Planta", "poder_base": 47},
+    {"nombre": "hoja_afilada", "tipo": "Planta", "poder_base": 52},
+    {"nombre": "rayo_solar", "tipo": "Planta", "poder_base": 86},
+    {"nombre": "drenadoras", "tipo": "Planta", "poder_base": 85},
+    {"nombre": "gigadrenado", "tipo": "Planta", "poder_base": 103},
+    {"nombre": "tormenta_floral", "tipo": "Planta", "poder_base": 123}
   ],
-  "Eléctrico": [
-    {"nombre": "impactrueno", "tipo": "Eléctrico", "poder_base": 65},
-    {"nombre": "rayo", "tipo": "Eléctrico", "poder_base": 90},
-    {"nombre": "chispa", "tipo": "Eléctrico", "poder_base": 50},
-    {"nombre": "onda_trueno", "tipo": "Eléctrico", "poder_base": 60},
-    {"nombre": "voltio_cruel", "tipo": "Eléctrico", "poder_base": 90},
-    {"nombre": "electrobola", "tipo": "Eléctrico", "poder_base": 60}
+  "Electrico": [
+    {"nombre": "impactrueno", "tipo": "Electrico", "poder_base": 49},
+    {"nombre": "rayo", "tipo": "Electrico", "poder_base": 68},
+    {"nombre": "chispa", "tipo": "Electrico", "poder_base": 91},
+    {"nombre": "onda_trueno", "tipo": "Electrico", "poder_base": 127},
+    {"nombre": "voltio_cruel", "tipo": "Electrico", "poder_base": 102},
+    {"nombre": "electrobola", "tipo": "Electrico", "poder_base": 60}
   ],
   "Roca": [
-    {"nombre": "lanzarrocas", "tipo": "Roca", "poder_base": 50},
-    {"nombre": "avalancha", "tipo": "Roca", "poder_base": 75},
-    {"nombre": "roca_afilada", "tipo": "Roca", "poder_base": 100},
-    {"nombre": "tumba_rocas", "tipo": "Roca", "poder_base": 28},
-    {"nombre": "poder_pasado", "tipo": "Roca", "poder_base": 60},
-    {"nombre": "pedrada", "tipo": "Roca", "poder_base": 25}
+    {"nombre": "lanzarrocas", "tipo": "Roca", "poder_base": 36},
+    {"nombre": "avalancha", "tipo": "Roca", "poder_base": 54},
+    {"nombre": "roca_afilada", "tipo": "Roca", "poder_base": 84},
+    {"nombre": "tumba_rocas", "tipo": "Roca", "poder_base": 108},
+    {"nombre": "filo_rocoso", "tipo": "Roca", "poder_base": 110},
+    {"nombre": "pedrada", "tipo": "Roca", "poder_base": 85}
   ],
   "Volador": [
-    {"nombre": "rafaga", "tipo": "Volador", "poder_base": 60},
-    {"nombre": "ataque_ala", "tipo": "Volador", "poder_base": 60},
-    {"nombre": "aire_afilado", "tipo": "Volador", "poder_base": 60},
-    {"nombre": "vuelo", "tipo": "Volador", "poder_base": 90},
-    {"nombre": "picotazo", "tipo": "Volador", "poder_base": 35},
+    {"nombre": "pico_taladro", "tipo": "Volador", "poder_base": 66},
+    {"nombre": "ataque_ala", "tipo": "Volador", "poder_base": 32},
+    {"nombre": "vendaval", "tipo": "Volador", "poder_base": 72},
+    {"nombre": "vuelo", "tipo": "Volador", "poder_base": 95},
+    {"nombre": "tajo_aereo", "tipo": "Volador", "poder_base": 112},
     {"nombre": "acrobat", "tipo": "Volador", "poder_base": 55}
   ],
   "Hielo": [
-    {"nombre": "rayo_hielo", "tipo": "Hielo", "poder_base": 90},
-    {"nombre": "ventisca", "tipo": "Hielo", "poder_base": 110},
-    {"nombre": "colmillo_hielo", "tipo": "Hielo", "poder_base": 65},
-    {"nombre": "canto_helado", "tipo": "Hielo", "poder_base": 60},
-    {"nombre": "polvo_hielo", "tipo": "Hielo", "poder_base": 40},
-    {"nombre": "avalancha_hielo", "tipo": "Hielo", "poder_base": 60}
+    {"nombre": "rayo_hielo", "tipo": "Hielo", "poder_base": 31},
+    {"nombre": "ventisca", "tipo": "Hielo", "poder_base": 58},
+    {"nombre": "colmillo_hielo", "tipo": "Hielo", "poder_base": 93},
+    {"nombre": "canto_helado", "tipo": "Hielo", "poder_base": 96},
+    {"nombre": "polvo_hielo", "tipo": "Hielo", "poder_base": 70},
+    {"nombre": "lanza_glacial", "tipo": "Hielo", "poder_base": 111}
   ],
   "Bicho": [
-    {"nombre": "picadura", "tipo": "Bicho", "poder_base": 32},
-    {"nombre": "tijera_x", "tipo": "Bicho", "poder_base": 80},
-    {"nombre": "zumbido", "tipo": "Bicho", "poder_base": 90},
-    {"nombre": "megacuerno", "tipo": "Bicho", "poder_base": 120},
-    {"nombre": "pin_misil", "tipo": "Bicho", "poder_base": 25},
+    {"nombre": "picadura", "tipo": "Bicho", "poder_base": 47},
+    {"nombre": "tijera_x", "tipo": "Bicho", "poder_base": 84},
+    {"nombre": "zumbido", "tipo": "Bicho", "poder_base": 109},
+    {"nombre": "megacuerno", "tipo": "Bicho", "poder_base": 86},
+    {"nombre": "doble_equipo", "tipo": "Bicho", "poder_base": 52},
     {"nombre": "acoso", "tipo": "Bicho", "poder_base": 20}
   ],
   "Tierra": [
-    {"nombre": "terremoto", "tipo": "Tierra", "poder_base": 100},
-    {"nombre": "excavar", "tipo": "Tierra", "poder_base": 80},
-    {"nombre": "tierra_viva", "tipo": "Tierra", "poder_base": 90},
-    {"nombre": "lanza_mugre", "tipo": "Tierra", "poder_base": 65},
-    {"nombre": "hueso_palo", "tipo": "Tierra", "poder_base": 65},
-    {"nombre": "fuerza_telur", "tipo": "Tierra", "poder_base": 100}
+    {"nombre": "terremoto", "tipo": "Tierra", "poder_base": 31},
+    {"nombre": "excavar", "tipo": "Tierra", "poder_base": 61},
+    {"nombre": "disparo_lodo", "tipo": "Tierra", "poder_base": 74},
+    {"nombre": "fisura", "tipo": "Tierra", "poder_base": 86},
+    {"nombre": "fuerza_tierra", "tipo": "Tierra", "poder_base": 123},
+    {"nombre": "bofeton_lodo", "tipo": "Tierra", "poder_base": 95}
   ],
   "Normal": [
     {"nombre": "ataque_rapido", "tipo": "Normal", "poder_base": 40},
-    {"nombre": "placaje", "tipo": "Normal", "poder_base": 35},
+    {"nombre": "placaje", "tipo": "Normal", "poder_base": 30},
     {"nombre": "golpe_cabeza", "tipo": "Normal", "poder_base": 70},
     {"nombre": "rapidez", "tipo": "Normal", "poder_base": 60},
-    {"nombre": "corte", "tipo": "Normal", "poder_base": 50},
+    {"nombre": "mega_patada", "tipo": "Normal", "poder_base": 106},
     {"nombre": "destructor", "tipo": "Normal", "poder_base": 80}
   ],
   "Veneno": [
-    {"nombre": "gunk_shot", "tipo": "Veneno", "poder_base": 120},
-    {"nombre": "bomba_lodo", "tipo": "Veneno", "poder_base": 65},
+    {"nombre": "picotazo_veneno", "tipo": "Veneno", "poder_base": 75},
+    {"nombre": "bomba_lodo", "tipo": "Veneno", "poder_base": 69},
     {"nombre": "colmillo_veneno", "tipo": "Veneno", "poder_base": 65},
-    {"nombre": "toxico", "tipo": "Veneno", "poder_base": 0},
-    {"nombre": "acido", "tipo": "Veneno", "poder_base": 40},
-    {"nombre": "polvo_veneno", "tipo": "Veneno", "poder_base": 35}
+    {"nombre": "toxico", "tipo": "Veneno", "poder_base": 91},
+    {"nombre": "acido", "tipo": "Veneno", "poder_base": 44},
+    {"nombre": "gas_veneno", "tipo": "Veneno", "poder_base": 85}
+  ],
+  "Psiquico": [
+    {"nombre": "psiquico", "tipo": "Psiquico", "poder_base": 30},
+    {"nombre": "confusion", "tipo": "Psiquico", "poder_base": 55},
+    {"nombre": "premonicion", "tipo": "Psiquico", "poder_base": 85},
+    {"nombre": "cabeza_zen", "tipo": "Psiquico", "poder_base": 92},
+    {"nombre": "reflejo", "tipo": "Psiquico", "poder_base": 93},
+    {"nombre": "paz_mental", "tipo": "Psiquico", "poder_base": 129}
+  ],
+  "Hada": [
+    {"nombre": "brillo_magico", "tipo": "Hada", "poder_base": 43},
+    {"nombre": "fuerza_lunar", "tipo": "Hada", "poder_base": 70},
+    {"nombre": "encanto", "tipo": "Hada", "poder_base": 72},
+    {"nombre": "carantona", "tipo": "Hada", "poder_base": 84},
+    {"nombre": "voz_cautivadora", "tipo": "Hada", "poder_base": 99},
+    {"nombre": "beso_drenaje", "tipo": "Hada", "poder_base": 119}
+  ],
+  "Lucha": [
+    {"nombre": "karate_chop", "tipo": "Lucha", "poder_base": 36},
+    {"nombre": "golpe_dinamico", "tipo": "Lucha", "poder_base": 51},
+    {"nombre": "patada_baja", "tipo": "Lucha", "poder_base": 76},
+    {"nombre": "sacrificio", "tipo": "Lucha", "poder_base": 94},
+    {"nombre": "sumision", "tipo": "Lucha", "poder_base": 98},
+    {"nombre": "corpulencia", "tipo": "Lucha", "poder_base": 117}
+  ],
+  "Acero": [
+    {"nombre": "cola_ferrea", "tipo": "Acero", "poder_base": 42},
+    {"nombre": "cabeza_hierro", "tipo": "Acero", "poder_base": 54},
+    {"nombre": "garra_metal", "tipo": "Acero", "poder_base": 81},
+    {"nombre": "metalaser", "tipo": "Acero", "poder_base": 95},
+    {"nombre": "embate_supremo", "tipo": "Acero", "poder_base": 91},
+    {"nombre": "plancha_corporal", "tipo": "Acero", "poder_base": 104}
+  ],
+  "Fantasma": [
+    {"nombre": "lenguetazo", "tipo": "Fantasma", "poder_base": 49},
+    {"nombre": "bola_sombra", "tipo": "Fantasma", "poder_base": 54},
+    {"nombre": "tinieblas", "tipo": "Fantasma", "poder_base": 83},
+    {"nombre": "infortunio", "tipo": "Fantasma", "poder_base": 83},
+    {"nombre": "golpe_fantasma", "tipo": "Fantasma", "poder_base": 93},
+    {"nombre": "sombra_vil", "tipo": "Fantasma", "poder_base": 103}
+  ],
+  "Dragon": [
+    {"nombre": "garra_dragon", "tipo": "Dragon", "poder_base": 34},
+    {"nombre": "drago_aliento", "tipo": "Dragon", "poder_base": 59},
+    {"nombre": "enfado", "tipo": "Dragon", "poder_base": 75},
+    {"nombre": "pulso_dragon", "tipo": "Dragon", "poder_base": 85},
+    {"nombre": "cola_dragon", "tipo": "Dragon", "poder_base": 103},
+    {"nombre": "cometa_draco", "tipo": "Dragon", "poder_base": 104}
   ]
 }

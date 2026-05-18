@@ -8,11 +8,11 @@ defmodule Equipo do
     pokemones: []
   ]
 
-  def nuevo(pokemones) when pokemones.length <1 do
+  def nuevo(pokemones) when length(pokemones) <1 do
     {:error,:debe_incluir_minimo_un_pokemon}
   end
 
-  def nuevo(pokemones) when pokemones.length >3 do
+  def nuevo(pokemones) when length(pokemones) >3 do
     {:error,:pokemones_exceden_maximo_permitido}
   end
 
@@ -20,25 +20,25 @@ defmodule Equipo do
     {:ok, %__MODULE__{pokemones: pokemones}}
   end
 
-  def agregar_pokemon(pokemones, pokemon) do
-    if tiene_pokemon?(pokemones,pokemon) do
+  def agregar_pokemon(equipo, id_pokemon) do
+    if tiene_pokemon?(equipo,id_pokemon) do
       {:error, :pokemon_pertenece_al_equipo}
     else
-      {:ok, %{pokemones | pokemones: [pokemon|pokemones]}}
+      {:ok, %{equipo | pokemones: [id_pokemon|equipo.pokemones]}}
     end
   end
 
-  def quitar_pokemon(pokemones, pokemon) do
-    if tiene_pokemon?(pokemones,pokemon) do
-      {:ok,%{pokemones | pokemones: List.delete(pokemones,pokemon)}}
+  def quitar_pokemon(equipo, id_pokemon) do
+    if tiene_pokemon?(equipo,id_pokemon) do
+      {:ok,%{equipo | pokemones: List.delete(equipo.pokemones,id_pokemon)}}
     else
-      {:error,:no_existe_pokemon_en_el_equipo}
+      {:error,:no_existe_pokemon_equipo}
     end
   end
 
-  def tiene_pokemon?(pokemones, pokemon) do
-      Enum.any?(pokemones, fn pokemon_equipo ->
-      pokemon.id==pokemon_equipo.id
+  def tiene_pokemon?(equipo, id) do
+      Enum.any?(equipo.pokemones, fn id_pokemon ->
+      id==id_pokemon
       end)
   end
 end

@@ -1,92 +1,908 @@
 {
-  "charmander": {
-    "tipos": ["Fuego"],
-    "ataque_base": 52,
+  "Bulbasaur": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 65,
     "defensa_base": 43,
-    "velocidad_base": 65
+    "velocidad_base": 26
   },
-  "squirtle": {
-    "tipos": ["Agua"],
-    "ataque_base": 48,
-    "defensa_base": 65,
-    "velocidad_base": 43
+  "Ivysaur": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 68,
+    "defensa_base": 48,
+    "velocidad_base": 40
   },
-  "bulbasaur": {
-    "tipos": ["Planta"],
-    "ataque_base": 49,
-    "defensa_base": 49,
-    "velocidad_base": 45
+  "Venusaur": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 97,
+    "defensa_base": 78,
+    "velocidad_base": 38
   },
-  "pikachu": {
-    "tipos": ["Eléctrico"],
-    "ataque_base": 55,
-    "defensa_base": 40,
-    "velocidad_base": 90
-  },
-  "geodude": {
-    "tipos": ["Roca", "Tierra"],
-    "ataque_base": 80,
-    "defensa_base": 100,
-    "velocidad_base": 20
-  },
-  "pidgey": {
-    "tipos": ["Volador", "Normal"],
-    "ataque_base": 45,
-    "defensa_base": 40,
-    "velocidad_base": 56
-  },
-  "articuno": {
-    "tipos": ["Hielo", "Volador"],
-    "ataque_base": 85,
-    "defensa_base": 100,
-    "velocidad_base": 85
-  },
-  "caterpie": {
-    "tipos": ["Bicho"],
-    "ataque_base": 30,
-    "defensa_base": 35,
-    "velocidad_base": 45
-  },
-  "onix": {
-    "tipos": ["Roca", "Tierra"],
-    "ataque_base": 45,
-    "defensa_base": 160,
-    "velocidad_base": 70
-  },
-  "vulpix": {
+  "Charmander": {
     "tipos": ["Fuego"],
-    "ataque_base": 41,
-    "defensa_base": 40,
-    "velocidad_base": 65
-  },
-  "magikarp": {
-    "tipos": ["Agua"],
-    "ataque_base": 10,
-    "defensa_base": 55,
-    "velocidad_base": 80
-  },
-  "oddish": {
-    "tipos": ["Planta"],
-    "ataque_base": 50,
-    "defensa_base": 55,
+    "ataque_base": 66,
+    "defensa_base": 57,
     "velocidad_base": 30
   },
-  "electabuzz": {
-    "tipos": ["Eléctrico"],
-    "ataque_base": 83,
-    "defensa_base": 57,
-    "velocidad_base": 105
+  "Charmeleon": {
+    "tipos": ["Fuego"],
+    "ataque_base": 63,
+    "defensa_base": 53,
+    "velocidad_base": 27
   },
-  "zubat": {
-    "tipos": ["Veneno", "Volador"],
+  "Charizard": {
+    "tipos": ["Fuego","Volador"],
+    "ataque_base": 90,
+    "defensa_base": 75,
+    "velocidad_base": 52
+  },
+  "Squirtle": {
+    "tipos": ["Agua"],
+    "ataque_base": 52,
+    "defensa_base": 56,
+    "velocidad_base": 63
+  },
+  "Wartortle": {
+    "tipos": ["Agua"],
     "ataque_base": 45,
-    "defensa_base": 35,
+    "defensa_base": 57,
+    "velocidad_base": 37
+  },
+  "Blastoise": {
+    "tipos": ["Agua"],
+    "ataque_base": 112,
+    "defensa_base": 104,
+    "velocidad_base": 78
+  },
+  "Caterpie": {
+    "tipos": ["Bicho"],
+    "ataque_base": 32,
+    "defensa_base": 34,
+    "velocidad_base": 43
+  },
+  "Metapod": {
+    "tipos": ["Bicho"],
+    "ataque_base": 33,
+    "defensa_base": 20,
+    "velocidad_base": 49
+  },
+  "Butterfree": {
+    "tipos": ["Bicho","Volador"],
+    "ataque_base": 70,
+    "defensa_base": 45,
+    "velocidad_base": 69
+  },
+  "Weedle": {
+    "tipos": ["Bicho","Veneno"],
+    "ataque_base": 38,
+    "defensa_base": 30,
+    "velocidad_base": 33
+  },
+  "Kakuna": {
+    "tipos": ["Bicho", "Veneno"],
+    "ataque_base": 29,
+    "defensa_base": 26,
+    "velocidad_base": 49
+  },
+  "Beedrill": {
+    "tipos": ["Bicho","Veneno"],
+    "ataque_base": 55,
+    "defensa_base": 43,
+    "velocidad_base": 30
+  },
+  "Pidgey": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 37,
+    "defensa_base": 23,
+    "velocidad_base": 36
+  },
+  "Pidgeotto": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 56,
+    "defensa_base": 59,
+    "velocidad_base": 41
+  },
+  "Pidgeot": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 95,
+    "defensa_base": 56,
+    "velocidad_base": 83
+  },
+  "Rattata": {
+    "tipos": ["Normal"],
+    "ataque_base": 42,
+    "defensa_base": 23,
+    "velocidad_base": 37
+  },
+  "Raticate": {
+    "tipos": ["Normal"],
+    "ataque_base": 47,
+    "defensa_base": 57,
+    "velocidad_base": 43
+  },
+  "Spearow": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 65,
+    "defensa_base": 59,
+    "velocidad_base": 48
+  },
+  "Fearow": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 88,
+    "defensa_base": 61,
+    "velocidad_base": 33
+  },
+  "Ekans": {
+    "tipos": ["Veneno"],
+    "ataque_base": 46,
+    "defensa_base": 47,
+    "velocidad_base": 74
+  },
+  "Arbok": {
+    "tipos": ["Veneno"],
+    "ataque_base": 54,
+    "defensa_base": 42,
+    "velocidad_base": 39
+  },
+  "Pikachu": {
+    "tipos": ["Electrico"],
+    "ataque_base": 48,
+    "defensa_base": 52,
+    "velocidad_base": 42
+  },
+  "Raichu": {
+    "tipos": ["Electrico"],
+    "ataque_base": 84,
+    "defensa_base": 75,
+    "velocidad_base": 71
+  },
+  "Sandshrew": {
+    "tipos": ["Tierra"],
+    "ataque_base": 50,
+    "defensa_base": 51,
+    "velocidad_base": 47
+  },
+  "Sandslash": {
+    "tipos": ["Tierra"],
+    "ataque_base": 76,
+    "defensa_base": 76,
+    "velocidad_base": 59
+  },
+  "Nidoran hembra": {
+    "tipos": ["Veneno"],
+    "ataque_base": 67,
+    "defensa_base": 60,
+    "velocidad_base": 29
+  },
+  "Nidorina": {
+    "tipos": ["Veneno"],
+    "ataque_base": 64,
+    "defensa_base": 60,
+    "velocidad_base": 35
+  },
+  "Nidoqueen": {
+    "tipos": ["Veneno","Tierra"],
+    "ataque_base": 87,
+    "defensa_base": 78,
+    "velocidad_base": 56
+  },
+  "Nidoran macho": {
+    "tipos": ["Veneno"],
+    "ataque_base": 50,
+    "defensa_base": 54,
+    "velocidad_base": 49
+  },
+  "Nidorino": {
+    "tipos": ["Veneno"],
+    "ataque_base": 53,
+    "defensa_base": 60,
+    "velocidad_base": 69
+  },
+  "Nidoking": {
+    "tipos": ["Veneno","Tierra"],
+    "ataque_base": 87,
+    "defensa_base": 62,
+    "velocidad_base": 66
+  },
+  "Clefairy": {
+    "tipos": ["Hada"],
+    "ataque_base": 69,
+    "defensa_base": 41,
+    "velocidad_base": 39
+  },
+  "Clefable": {
+    "tipos": ["Hada"],
+    "ataque_base": 46,
+    "defensa_base": 50,
+    "velocidad_base": 50
+  },
+  "Vulpix": {
+    "tipos": ["Fuego"],
+    "ataque_base": 53,
+    "defensa_base": 42,
+    "velocidad_base": 38
+  },
+  "Ninetales": {
+    "tipos": ["Fuego"],
+    "ataque_base": 63,
+    "defensa_base": 50,
+    "velocidad_base": 38
+  },
+  "Jigglypuff": {
+    "tipos": ["Normal","Hada"],
+    "ataque_base": 65,
+    "defensa_base": 55,
+    "velocidad_base": 50
+  },
+  "Wigglytuff": {
+    "tipos": ["Normal","Hada"],
+    "ataque_base": 65,
+    "defensa_base": 54,
+    "velocidad_base": 34
+  },
+  "Zubat": {
+    "tipos": ["Veneno","Volador"],
+    "ataque_base": 33,
+    "defensa_base": 24,
+    "velocidad_base": 32
+  },
+  "Golbat": {
+    "tipos": ["Veneno","Volador"],
+    "ataque_base": 68,
+    "defensa_base": 57,
+    "velocidad_base": 59
+  },
+  "Oddish": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 33,
+    "defensa_base": 33,
+    "velocidad_base": 43
+  },
+  "Gloom": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 57,
+    "defensa_base": 51,
+    "velocidad_base": 39
+  },
+  "Vileplume": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 49,
+    "defensa_base": 56,
+    "velocidad_base": 56
+  },
+  "Paras": {
+    "tipos": ["Bicho","Planta"],
+    "ataque_base": 47,
+    "defensa_base": 41,
+    "velocidad_base": 32
+  },
+  "Parasect": {
+    "tipos": ["Bicho","Planta"],
+    "ataque_base": 49,
+    "defensa_base": 60,
+    "velocidad_base": 35
+  },
+  "Venonat": {
+    "tipos": ["Bicho","Veneno"],
+    "ataque_base": 70,
+    "defensa_base": 53,
+    "velocidad_base": 63
+  },
+  "Venomoth": {
+    "tipos": ["Bicho","Veneno"],
+    "ataque_base": 47,
+    "defensa_base": 52,
+    "velocidad_base": 49
+  },
+  "Diglett": {
+    "tipos": ["Tierra"],
+    "ataque_base": 44,
+    "defensa_base": 34,
+    "velocidad_base": 41
+  },
+  "Dugtrio": {
+    "tipos": ["Tierra"],
+    "ataque_base": 53,
+    "defensa_base": 57,
+    "velocidad_base": 45
+  },
+  "Meowth": {
+    "tipos": ["Normal"],
+    "ataque_base": 66,
+    "defensa_base": 43,
+    "velocidad_base": 68
+  },
+  "Persian": {
+    "tipos": ["Normal"],
+    "ataque_base": 87,
+    "defensa_base": 79,
+    "velocidad_base": 59
+  },
+  "Psyduck": {
+    "tipos": ["Agua"],
+    "ataque_base": 69,
+    "defensa_base": 60,
+    "velocidad_base": 46
+  },
+  "Golduck": {
+    "tipos": ["Agua"],
+    "ataque_base": 48,
+    "defensa_base": 49,
+    "velocidad_base": 52
+  },
+  "Mankey": {
+    "tipos": ["Lucha"],
+    "ataque_base": 50,
+    "defensa_base": 54,
+    "velocidad_base": 25
+  },
+  "Primeape": {
+    "tipos": ["Lucha"],
+    "ataque_base": 93,
+    "defensa_base": 83,
+    "velocidad_base": 58
+  },
+  "Growlithe": {
+    "tipos": ["Fuego"],
+    "ataque_base": 61,
+    "defensa_base": 45,
+    "velocidad_base": 57
+  },
+  "Arcanine": {
+    "tipos": ["Fuego"],
+    "ataque_base": 73,
+    "defensa_base": 82,
+    "velocidad_base": 63
+  },
+  "Poliwag": {
+    "tipos": ["Agua"],
+    "ataque_base": 65,
+    "defensa_base": 56,
+    "velocidad_base": 63
+  },
+  "Poliwhirl": {
+    "tipos": ["Agua"],
+    "ataque_base": 51,
+    "defensa_base": 44,
+    "velocidad_base": 48
+  },
+  "Poliwrath": {
+    "tipos": ["Agua"],
+    "ataque_base": 94,
+    "defensa_base": 60,
+    "velocidad_base": 94
+  },
+  "Abra": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 41,
+    "defensa_base": 20,
+    "velocidad_base": 44
+  },
+  "Kadabra": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 55,
+    "defensa_base": 55,
+    "velocidad_base": 26
+  },
+  "Alakazam": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 93,
+    "defensa_base": 93,
+    "velocidad_base": 74
+  },
+  "Machop": {
+    "tipos": ["Lucha"],
+    "ataque_base": 52,
+    "defensa_base": 41,
+    "velocidad_base": 40
+  },
+  "Machoke": {
+    "tipos": ["Lucha"],
+    "ataque_base": 63,
+    "defensa_base": 42,
+    "velocidad_base": 30
+  },
+  "Machamp": {
+    "tipos": ["Lucha"],
+    "ataque_base": 113,
+    "defensa_base": 101,
+    "velocidad_base": 33
+  },
+  "Bellsprout": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 69,
+    "defensa_base": 57,
+    "velocidad_base": 74
+  },
+  "Weepinbell": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 49,
+    "defensa_base": 44,
+    "velocidad_base": 67
+  },
+  "Victreebel": {
+    "tipos": ["Planta","Veneno"],
+    "ataque_base": 85,
+    "defensa_base": 85,
+    "velocidad_base": 95
+  },
+  "Tentacool": {
+    "tipos": ["Agua","Veneno"],
+    "ataque_base": 50,
+    "defensa_base": 48,
+    "velocidad_base": 58
+  },
+  "Tentacruel": {
+    "tipos": ["Agua","Veneno"],
+    "ataque_base": 64,
+    "defensa_base": 53,
+    "velocidad_base": 38
+  },
+  "Geodude": {
+    "tipos": ["Roca","Tierra"],
+    "ataque_base": 62,
+    "defensa_base": 46,
+    "velocidad_base": 70
+  },
+  "Graveler": {
+    "tipos": ["Roca","Tierra"],
+    "ataque_base": 54,
+    "defensa_base": 52,
+    "velocidad_base": 67
+  },
+  "Golem": {
+    "tipos": ["Roca","Tierra"],
+    "ataque_base": 65,
+    "defensa_base": 71,
+    "velocidad_base": 43
+  },
+  "Ponyta": {
+    "tipos": ["Fuego"],
+    "ataque_base": 61,
+    "defensa_base": 54,
+    "velocidad_base": 32
+  },
+  "Rapidash": {
+    "tipos": ["Fuego"],
+    "ataque_base": 77,
+    "defensa_base": 62,
+    "velocidad_base": 53
+  },
+  "Slowpoke": {
+    "tipos": ["Agua","Psiquico"],
+    "ataque_base": 55,
+    "defensa_base": 40,
+    "velocidad_base": 62
+  },
+  "Slowbro": {
+    "tipos": ["Agua","Psiquico"],
+    "ataque_base": 62,
+    "defensa_base": 47,
+    "velocidad_base": 62
+  },
+  "Magnemite": {
+    "tipos": ["Electrico","Acero"],
+    "ataque_base": 52,
+    "defensa_base": 40,
+    "velocidad_base": 29
+  },
+  "Magneton": {
+    "tipos": ["Electrico","Acero"],
+    "ataque_base": 67,
+    "defensa_base": 60,
+    "velocidad_base": 28
+  },
+  "Farfetchd": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 52,
+    "defensa_base": 42,
+    "velocidad_base": 27
+  },
+  "Doduo": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 55,
+    "defensa_base": 42,
+    "velocidad_base": 57
+  },
+  "Dodrio": {
+    "tipos": ["Normal","Volador"],
+    "ataque_base": 77,
+    "defensa_base": 63,
+    "velocidad_base": 87
+  },
+  "Seel": {
+    "tipos": ["Agua"],
+    "ataque_base": 51,
+    "defensa_base": 57,
+    "velocidad_base": 33
+  },
+  "Dewgong": {
+    "tipos": ["Agua","Hielo"],
+    "ataque_base": 68,
+    "defensa_base": 58,
+    "velocidad_base": 61
+  },
+  "Grimer": {
+    "tipos": ["Veneno"],
+    "ataque_base": 60,
+    "defensa_base": 47,
+    "velocidad_base": 75
+  },
+  "Muk": {
+    "tipos": ["Veneno"],
+    "ataque_base": 85,
+    "defensa_base": 80,
+    "velocidad_base": 77
+  },
+  "Shellder": {
+    "tipos": ["Agua"],
+    "ataque_base": 51,
+    "defensa_base": 43,
+    "velocidad_base": 31
+  },
+  "Cloyster": {
+    "tipos": ["Agua","Hielo"],
+    "ataque_base": 91,
+    "defensa_base": 68,
+    "velocidad_base": 70
+  },
+  "Gastly": {
+    "tipos": ["Fantasma","Veneno"],
+    "ataque_base": 58,
+    "defensa_base": 53,
+    "velocidad_base": 54
+  },
+  "Haunter": {
+    "tipos": ["Fantasma","Veneno"],
+    "ataque_base": 58,
+    "defensa_base": 53,
+    "velocidad_base": 54
+  },
+  "Gengar": {
+    "tipos": ["Fantasma","Veneno"],
+    "ataque_base": 110,
+    "defensa_base": 76,
+    "velocidad_base": 42
+  },
+  "Onix": {
+    "tipos": ["Roca","Tierra"],
+    "ataque_base": 57,
+    "defensa_base": 70,
+    "velocidad_base": 21
+  },
+  "Drowzee": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 52,
+    "defensa_base": 46,
+    "velocidad_base": 37
+  },
+  "Hypno": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 62,
+    "defensa_base": 54,
+    "velocidad_base": 33
+  },
+  "Krabby": {
+    "tipos": ["Agua"],
+    "ataque_base": 58,
+    "defensa_base": 45,
+    "velocidad_base": 42
+  },
+  "Kingler": {
+    "tipos": ["Agua"],
+    "ataque_base": 84,
+    "defensa_base": 62,
+    "velocidad_base": 34
+  },
+  "Voltorb": {
+    "tipos": ["Electrico"],
+    "ataque_base": 59,
+    "defensa_base": 57,
+    "velocidad_base": 31
+  },
+  "Electrode": {
+    "tipos": ["Electrico"],
+    "ataque_base": 46,
+    "defensa_base": 60,
+    "velocidad_base": 79
+  },
+  "Exeggcute": {
+    "tipos": ["Planta","Psiquico"],
+    "ataque_base": 45,
+    "defensa_base": 42,
+    "velocidad_base": 73
+  },
+  "Exeggutor": {
+    "tipos": ["Planta","Psiquico"],
+    "ataque_base": 52,
+    "defensa_base": 45,
+    "velocidad_base": 51
+  },
+  "Cubone": {
+    "tipos": ["Tierra"],
+    "ataque_base": 60,
+    "defensa_base": 55,
+    "velocidad_base": 38
+  },
+  "Marowak": {
+    "tipos": ["Tierra"],
+    "ataque_base": 82,
+    "defensa_base": 83,
+    "velocidad_base": 32
+  },
+  "Hitmonlee": {
+    "tipos": ["Lucha"],
+    "ataque_base": 50,
+    "defensa_base": 52,
+    "velocidad_base": 25
+  },
+  "Hitmonchan": {
+    "tipos": ["Lucha"],
+    "ataque_base": 57,
+    "defensa_base": 48,
+    "velocidad_base": 75
+  },
+  "Lickitung": {
+    "tipos": ["Normal"],
+    "ataque_base": 70,
+    "defensa_base": 54,
+    "velocidad_base": 43
+  },
+  "Koffing": {
+    "tipos": ["Veneno"],
+    "ataque_base": 58,
+    "defensa_base": 57,
+    "velocidad_base": 67
+  },
+  "Weezing": {
+    "tipos": ["Veneno"],
+    "ataque_base": 67,
+    "defensa_base": 55,
+    "velocidad_base": 34
+  },
+  "Rhyhorn": {
+    "tipos": ["Tierra","Roca"],
+    "ataque_base": 51,
+    "defensa_base": 49,
+    "velocidad_base": 38
+  },
+  "Rhydon": {
+    "tipos": ["Tierra","Roca"],
+    "ataque_base": 71,
+    "defensa_base": 73,
+    "velocidad_base": 94
+  },
+  "Chansey": {
+    "tipos": ["Normal"],
+    "ataque_base": 46,
+    "defensa_base": 65,
+    "velocidad_base": 15
+  },
+  "Tangela": {
+    "tipos": ["Planta"],
+    "ataque_base": 46,
+    "defensa_base": 58,
     "velocidad_base": 55
   },
-  "sandshrew": {
-    "tipos": ["Tierra"],
-    "ataque_base": 75,
-    "defensa_base": 85,
+  "Kangaskhan": {
+    "tipos": ["Normal"],
+    "ataque_base": 61,
+    "defensa_base": 56,
+    "velocidad_base": 35
+  },
+  "Horsea": {
+    "tipos": ["Agua"],
+    "ataque_base": 46,
+    "defensa_base": 56,
+    "velocidad_base": 30
+  },
+  "Seadra": {
+    "tipos": ["Agua"],
+    "ataque_base": 50,
+    "defensa_base": 42,
+    "velocidad_base": 63
+  },
+  "Goldeen": {
+    "tipos": ["Agua"],
+    "ataque_base": 47,
+    "defensa_base": 47,
+    "velocidad_base": 50
+  },
+  "Seaking": {
+    "tipos": ["Agua"],
+    "ataque_base": 48,
+    "defensa_base": 58,
     "velocidad_base": 40
+  },
+  "Staryu": {
+    "tipos": ["Agua"],
+    "ataque_base": 63,
+    "defensa_base": 59,
+    "velocidad_base": 27
+  },
+  "Starmie": {
+    "tipos": ["Agua","Psiquico"],
+    "ataque_base": 89,
+    "defensa_base": 57,
+    "velocidad_base": 88
+  },
+  "Mr. Mime": {
+    "tipos": ["Psiquico","Hada"],
+    "ataque_base": 66,
+    "defensa_base": 58,
+    "velocidad_base": 61
+  },
+  "Scyther": {
+    "tipos": ["Bicho","Volador"],
+    "ataque_base": 86,
+    "defensa_base": 65,
+    "velocidad_base": 58
+  },
+  "Jynx": {
+    "tipos": ["Hielo","Psiquico"],
+    "ataque_base": 51,
+    "defensa_base": 50,
+    "velocidad_base": 40
+  },
+  "Electabuzz": {
+    "tipos": ["Electrico"],
+    "ataque_base": 78,
+    "defensa_base": 67,
+    "velocidad_base": 41
+  },
+  "Magmar": {
+    "tipos": ["Fuego"],
+    "ataque_base": 91,
+    "defensa_base": 75,
+    "velocidad_base": 63
+  },
+  "Pinsir": {
+    "tipos": ["Bicho"],
+    "ataque_base": 84,
+    "defensa_base": 65,
+    "velocidad_base": 34
+  },
+  "Tauros": {
+    "tipos": ["Normal"],
+    "ataque_base": 70,
+    "defensa_base": 69,
+    "velocidad_base": 37
+  },
+  "Magikarp": {
+    "tipos": ["Agua"],
+    "ataque_base": 27,
+    "defensa_base": 26,
+    "velocidad_base": 41
+  },
+  "Gyarados": {
+    "tipos": ["Agua","Volador"],
+    "ataque_base": 98,
+    "defensa_base": 78,
+    "velocidad_base": 69
+  },
+  "Lapras": {
+    "tipos": ["Agua","Hielo"],
+    "ataque_base": 72,
+    "defensa_base": 83,
+    "velocidad_base": 56
+  },
+  "Ditto": {
+    "tipos": ["Normal"],
+    "ataque_base": 56,
+    "defensa_base": 49,
+    "velocidad_base": 35
+  },
+  "Eevee": {
+    "tipos": ["Normal"],
+    "ataque_base": 59,
+    "defensa_base": 57,
+    "velocidad_base": 70
+  },
+  "Vaporeon": {
+    "tipos": ["Agua"],
+    "ataque_base": 79,
+    "defensa_base": 74,
+    "velocidad_base": 92
+  },
+  "Jolteon": {
+    "tipos": ["Electrico"],
+    "ataque_base": 70,
+    "defensa_base": 76,
+    "velocidad_base": 115
+  },
+  "Flareon": {
+    "tipos": ["Fuego"],
+    "ataque_base": 79,
+    "defensa_base": 84,
+    "velocidad_base": 38
+  },
+  "Porygon": {
+    "tipos": ["Normal"],
+    "ataque_base": 49,
+    "defensa_base": 48,
+    "velocidad_base": 32
+  },
+  "Omanyte": {
+    "tipos": ["Roca","Agua"],
+    "ataque_base": 48,
+    "defensa_base": 57,
+    "velocidad_base": 34
+  },
+  "Omastar": {
+    "tipos": ["Roca","Agua"],
+    "ataque_base": 78,
+    "defensa_base": 64,
+    "velocidad_base": 51
+  },
+  "Kabuto": {
+    "tipos": ["Roca","Agua"],
+    "ataque_base": 67,
+    "defensa_base": 50,
+    "velocidad_base": 38
+  },
+  "Kabutops": {
+    "tipos": ["Roca","Agua"],
+    "ataque_base": 91,
+    "defensa_base": 75,
+    "velocidad_base": 58
+  },
+  "Aerodactyl": {
+    "tipos": ["Roca","Volador"],
+    "ataque_base": 86,
+    "defensa_base": 70,
+    "velocidad_base": 77
+  },
+  "Snorlax": {
+    "tipos": ["Normal"],
+    "ataque_base": 118,
+    "defensa_base": 88,
+    "velocidad_base": 21
+  },
+  "Articuno": {
+    "tipos": ["Hielo","Volador"],
+    "ataque_base": 110,
+    "defensa_base": 97,
+    "velocidad_base": 60
+  },
+  "Zapdos": {
+    "tipos": ["Electrico","Volador"],
+    "ataque_base": 91,
+    "defensa_base": 70,
+    "velocidad_base": 67
+  },
+  "Moltres": {
+    "tipos": ["Fuego","Volador"],
+    "ataque_base": 114,
+    "defensa_base": 78,
+    "velocidad_base": 106
+  },
+  "Dratini": {
+    "tipos": ["Dragon"],
+    "ataque_base": 53,
+    "defensa_base": 45,
+    "velocidad_base": 72
+  },
+  "Dragonair": {
+    "tipos": ["Dragon"],
+    "ataque_base": 59,
+    "defensa_base": 57,
+    "velocidad_base": 70
+  },
+  "Dragonite": {
+    "tipos": ["Dragon","Volador"],
+    "ataque_base": 103,
+    "defensa_base": 105,
+    "velocidad_base": 26
+  },
+  "Mewtwo": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 93,
+    "defensa_base": 74,
+    "velocidad_base": 44
+  },
+  "Mew": {
+    "tipos": ["Psiquico"],
+    "ataque_base": 62,
+    "defensa_base": 41,
+    "velocidad_base": 48
   }
 }
