@@ -154,17 +154,114 @@ defmodule Servidor do
   end
 
   #-------------------- Tienda y Sobres-----------------------------------
+  @impl true
+  def handle_call({:ver_tienda, pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, nil, estado}
 
+      entrenador ->
+        respuesta = GestionTienda.ver_tienda(estado.tienda)
+        {:reply, respuesta, estado}
+    end
+  end
 
+  @impl true
+  def handle_call({:comprar_sobre, pid, tipo_sobre}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, {:error, "Entrenador No Encontrado"}, estado}
 
+      entrenador ->
+        case GestionTienda.comprar_sobre(entrenador, tipo_sobre, estado.tienda) do
+          {:ok, monedas} ->
 
+            id = UUID.uuid4()
+
+            sobres_actualizados =
+              Map.put(entrenador.sobres_pendientes, id, %SobrePendiente{tipo: tipo_sobre})
+
+            nuevo =
+              %{
+                entrenador
+                | monedas_actuales: monedas,
+                  sobres_pendientes: sobres_actualizados
+              }
+
+            entrenadores_actualizados =
+              Map.put(estado.entrenadores, usuario, nuevo)
+
+            nuevo_estado = %{
+              estado
+              | entrenadores: entrenadores_actualizados
+            }
+
+            Persistencia.escribir_entrenador(entrenadores_actualizados)
+            {:reply, {:ok, "Nuevo Sobre Tipo -#{tipo_sobre}- Agregado a Sobres Pendientes"}, nuevo_estado}
+
+          {:error, razon} ->
+            {:reply, {:error, "Monedas Insuficientes Para Realizar la Compra"}, estado}
+        end
+    end
+  end
+
+  @impl true
+  def handle_call({:ver_sobres, pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, {:error, "Usuario No Encontrado"}, estado}
+
+      entrenador ->
+        mensaje = GestionTienda.ver_sobres_pendientes(entrenador)
+        {:reply, {:ok, mensaje}, estado}
+    end
+  end
+
+  @impl true
+  def handle_call({:abrir_sobre, pid, id_sobre}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, {:error, "Usuario No Encontrado"}, estado}
+
+      entrenador ->
+        case GestionTienda.abrir_sobre(usuario, estado, entrenador, id_sobre) do
+
+          {:error, razon} ->
+            {:reply, {:error, razon}, estado}
+
+          {:ok, pokemones, mensaje} ->
+
+            nuevo_inventario =
+              Enum.reduce(pokemones, entrenador.inventario, fn {id, pokemon}, acc ->
+                Map.put(acc, id, pokemon)
+              end)
+
+            sobres_actualizados = Map.delete(entrenador.sobres_pendientes, id_sobre)
+
+            entrenador_actualizado =
+              %{
+                entrenador
+                | inventario: nuevo_inventario,
+                  sobres_pendientes: sobres_actualizados
+              }
+
+            entrenadores_actualizados =
+              Map.put(estado.entrenadores, usuario, entrenador_actualizado)
+
+            nuevo_estado =
+              %{estado | entrenadores: entrenadores_actualizados}
+
+            Persistencia.escribir_entrenador(entrenadores_actualizados)
+            {:reply, {:ok, mensaje}, nuevo_estado}
+        end
+    end
+  end
 
   #------------------ Intercambio Pokemon---------------------------------
-
-
-
-
-
 
 
   #----------------------- Equipos Pokemon -------------------------------
@@ -221,7 +318,6 @@ defmodule Servidor do
         {:reply, razon, estado}
     end
   end
-
    #------------------ Salas de Batalla ---------------------------------
 
 end

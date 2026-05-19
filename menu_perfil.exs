@@ -81,10 +81,8 @@ defmodule MenuPerfil do
   end
 end
 
-
-
-
 defmodule MenuTienda do
+  @nodo_servidor :servidor@localhost
 
   def mostrar(pid) do
     loop(pid)
@@ -96,32 +94,95 @@ defmodule MenuTienda do
     ------ TIENDA ------
     1. Ver tienda
     2. Comprar sobre
-    3. Abrir sobre
-    4. Volver
-    --------------------
+    3. Ver sobres pendientes
+    4. Abrir sobre
+    5. Volver
     """)
 
     opcion = Util.leer("Ingrese una opción: ", :integer)
+    Util.imprimir_mensaje("\n")
 
     case opcion do
-      #1 ->
-      #  GestionTienda.ver_tienda()
-      #  loop(usuario)
-      #2 ->
-      #  GestionTienda.comprar_sobre(usuario)
-      #  loop(usuario)
-      #3 ->
-      #  GestionTienda.abrir_sobre(usuario)
-      #  loop(usuario)
-      #4 ->
-      #  :ok
+      1 ->
+        ver_tienda(pid)
+        loop(pid)
+      2 ->
+        comprar_sobre(pid)
+        loop(pid)
+      3 ->
+        ver_sobres_pendientes(pid)
+        loop(pid)
+      4 ->
+        abrir_sobre(pid)
+        loop(pid)
+      5 ->
+        :ok
       _ ->
         Util.imprimir_error("Opción inválida. Intente nuevamente")
         loop(pid)
       end
   end
-end
 
+  def ver_tienda(pid) do
+    case GenServer.call({Servidor, @nodo_servidor}, {:ver_tienda, pid}) do
+      nil ->
+        Util.imprimir_error("Usuario No Encontrado")
+
+      tienda ->
+        Util.imprimir_mensaje(tienda)
+    end
+  end
+
+  def comprar_sobre(pid) do
+    mensaje = """
+    Tipos de Sobres en Tienda:
+    - 1. Basico
+    - 2. Avanzado
+    """
+    Util.imprimir_mensaje(mensaje)
+    tipo = Util.leer("Ingrese el Tipo de Sobre que Desea Comprar: ", :integer)
+    Util.imprimir_mensaje("\n")
+
+    case tipo do
+      1 -> ejecutar_compra(pid, "basico")
+      2 -> ejecutar_compra(pid, "avanzado")
+      _ ->
+        Util.imprimir_error("Opción inválida. Intente Nuevamente.")
+        comprar_sobre(pid)
+    end
+  end
+
+  defp ejecutar_compra(pid, tipo_sobre) do
+    case GenServer.call({Servidor, @nodo_servidor}, {:comprar_sobre, pid, tipo_sobre}) do
+      {:error, razon} ->
+        Util.imprimir_error(razon)
+
+      {:ok, mensaje} ->
+        Util.imprimir_mensaje(mensaje)
+    end
+  end
+
+  def ver_sobres_pendientes(pid) do
+    case GenServer.call({Servidor, @nodo_servidor}, {:ver_sobres, pid}) do
+      {:error, razon} ->
+        Util.imprimir_error(razon)
+
+      {:ok, mensaje} ->
+        Util.imprimir_mensaje(mensaje)
+    end
+  end
+
+  def abrir_sobre(pid) do
+    id_sobre = Util.leer("Ingrese el Id del Sobre que Desea Abrir: ", :string)
+    case GenServer.call({Servidor, @nodo_servidor}, {:abrir_sobre, pid, id_sobre}) do
+      {:error, razon} ->
+        Util.imprimir_error(razon)
+
+      {:ok, mensaje} ->
+        Util.imprimir_mensaje(mensaje)
+    end
+  end
+end
 
 defmodule MenuEquipos do
   @nodo_servidor :servidor@localhost

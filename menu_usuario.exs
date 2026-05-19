@@ -81,9 +81,9 @@ defmodule Usuario do
       1 ->
         MenuPerfil.mostrar(pid)
         loop_principal(pid)
-      #2 ->
-      #  MenuTienda.mostrar(pid)
-      #  loop_principal(pid)
+      2 ->
+        MenuTienda.mostrar(pid)
+        loop_principal(pid)
       #3 ->
       # MenuIntercambio.mostrar(pid)
       #  loop_principal(pid)
