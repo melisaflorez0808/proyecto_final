@@ -126,8 +126,8 @@ defmodule GestionEquipos do
               end
 
           end
-        end
       end
+    end
 
       @doc """
       Las funcion agregar_pokemon_equipo recibe por parámetro:
@@ -158,9 +158,9 @@ defmodule GestionEquipos do
               end
             true ->
               {:error, :no_tiene_pokemon_inventario}
-            end
           end
         end
+      end
 
       @doc """
       Las funcion usar_equipo recibe por parámetro:

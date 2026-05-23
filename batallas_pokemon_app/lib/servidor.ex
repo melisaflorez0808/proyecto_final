@@ -3,7 +3,6 @@ defmodule Servidor do
   use GenServer
 
   def main do
-
     IO.puts("Servidor iniciando....")
     {:ok, _} = Node.start(:servidor@localhost, :shortnames)
     Node.set_cookie(:pokemon)
@@ -12,24 +11,22 @@ defmodule Servidor do
     Process.sleep(:infinity)
   end
 
-
   def start_link() do
-    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
+    GenServer.start_link(_MODULE, nil, name: __MODULE_)
   end
-
 
   @impl true
   def init(_) do
 
-     {:ok, supervisor} = DynamicSupervisor.start_link(strategy: :one_for_one)
+    #Creo el nuevo Supervisor y el Gestor de Salas que Tiene un Genserver
+    iniciar_salas()
 
     estado = %{
       pokemones: Persistencia.leer_pokemones(),
       movimientos: Persistencia.leer_movimientos(),
       entrenadores: Persistencia.leer_entrenadores(),
       tienda: Persistencia.leer_tienda(),
-      sesiones: %{},
-      sup: supervisor
+      sesiones: %{}
     }
 
     IO.puts("Servidor iniciado correctamente")
@@ -39,6 +36,22 @@ defmodule Servidor do
     IO.inspect(estado.movimientos)
 
     {:ok, estado}
+  end
+
+  defp iniciar_salas do
+    if Process.whereis(Registry.Salas) == nil do
+      {:ok, _} = Registry.start_link(keys: :unique, name: Registry.Salas)
+    end
+
+    #Supervisor de Salas
+    if Process.whereis(SupervisorSalas) == nil do
+      {:ok, _} = DynamicSupervisor.start_link(strategy: :one_for_one, name: SupervisorSalas)
+    end
+
+    #Gestor de Salas en un Genserver
+    if Process.whereis(GestorSalas) == nil do
+      {:ok, _} = GestorSalas.start_link()
+    end
   end
 
   #-------------------- Login ---------------------------------------
