@@ -21,12 +21,15 @@ defmodule Servidor do
   @impl true
   def init(_) do
 
+     {:ok, supervisor} = DynamicSupervisor.start_link(strategy: :one_for_one)
+
     estado = %{
       pokemones: Persistencia.leer_pokemones(),
       movimientos: Persistencia.leer_movimientos(),
       entrenadores: Persistencia.leer_entrenadores(),
       tienda: Persistencia.leer_tienda(),
-      sesiones: %{}
+      sesiones: %{},
+      sup: supervisor
     }
 
     IO.puts("Servidor iniciado correctamente")
@@ -161,7 +164,7 @@ defmodule Servidor do
       nil ->
         {:reply, nil, estado}
 
-      entrenador ->
+      _entrenador ->
         respuesta = GestionTienda.ver_tienda(estado.tienda)
         {:reply, respuesta, estado}
     end
@@ -201,7 +204,7 @@ defmodule Servidor do
             Persistencia.escribir_entrenador(entrenadores_actualizados)
             {:reply, {:ok, "Nuevo Sobre Tipo -#{tipo_sobre}- Agregado a Sobres Pendientes"}, nuevo_estado}
 
-          {:error, razon} ->
+          {:error, _razon} ->
             {:reply, {:error, "Monedas Insuficientes Para Realizar la Compra"}, estado}
         end
     end
@@ -275,6 +278,7 @@ defmodule Servidor do
         entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
         nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
         Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+
         {:reply, "Equipo creado", nuevo_estado}
 
       {:error, :nombre_equipo_duplicado} ->
@@ -295,6 +299,7 @@ defmodule Servidor do
         entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
         nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
         Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+
         {:reply, "pokemon con #{id_pokemon} eliminado del equipo", nuevo_estado}
 
       {:error, razon}->
@@ -312,12 +317,35 @@ defmodule Servidor do
         entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
         nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
         Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+
         {:reply, "pokemon con #{id_pokemon} agregado al equipo", nuevo_estado}
 
       {:error, razon}->
         {:reply, razon, estado}
     end
   end
+
+  def handle_call({:usar_equipo,nombre_equipo,pid}, _from, estado) do
+    usuario=Map.get(estado.sesiones,pid)
+    entrenador=estado.entrenadores[usuario]
+
+    case GestionEquipos.usar_equipo(nombre_equipo,entrenador) do
+
+      {:equipo_activo,entrenador_actualizado} ->
+        entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
+        nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
+        Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
+
+        {:reply, "Equipo #{nombre_equipo} activo para usar en batalla", nuevo_estado}
+
+      {:error, :equipo_pokemones_faltantes, validar} ->
+        {:reply, "No se pudo usar equipo, debe quitar pokemon(es) con id: #{inspect(validar)}",estado}
+
+      {:error, razon}->
+        {:reply, razon, estado}
+    end
+  end
+
    #------------------ Salas de Batalla ---------------------------------
 
 end

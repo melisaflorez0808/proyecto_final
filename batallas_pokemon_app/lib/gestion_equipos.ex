@@ -45,9 +45,9 @@ defmodule GestionEquipos do
 
   def buscar_pokemon(inventario,id) do
     case Map.get(inventario, id) do
-      nil -> IO.puts("Pokemon con id #{id} no esta en su inventario")
+      nil ->
         nil
-      _pokemon -> IO.puts("Pokemon con id #{id} agregado")
+      _pokemon ->
         id
     end
   end
@@ -64,18 +64,32 @@ defmodule GestionEquipos do
       Enum.map(entrenador.equipos, fn {nombre,equipo} ->
         lista_pokemones=
           Enum.map(equipo.pokemones, fn id_pokemon ->
-            pokemon=
-              Map.get(entrenador.inventario,id_pokemon)
-            "[#{id_pokemon}] #{pokemon.especie}"
+            case Map.get(entrenador.inventario,id_pokemon) do
+              nil ->
+                "[#{id_pokemon}] sin pokemon en inventario"
+              pokemon ->
+                "[#{id_pokemon}] #{pokemon.especie}"
+            end
           end)
           |>Enum.join(", ")
         "#{String.pad_trailing(nombre,10)} [#{length(equipo.pokemones)}/3]: #{lista_pokemones}"
       end)
       |>Enum.join("\n")
 
-    mensaje=
-      "Equipos guardados:\n" <> equipos
+    equipo_activo=
+      if (entrenador.equipo_activo==nil) do
+        "No tiene un equipo activo"
+      else
+        entrenador.equipo_activo
+      end
 
+    mensaje=
+      """
+      Equipos guardados:
+      #{equipos}
+
+      Equipo activo actualmente: #{equipo_activo}
+      """
     {:ok,mensaje}
     end
 
@@ -95,8 +109,8 @@ defmodule GestionEquipos do
 
         equipo ->
           cond do
-            Enum.member?(entrenador.equipos[nombre_equipo].pokemones, id_pokemon) and nombre_equipo==entrenador.equipo_activo ->
-              {:error, :pokemon_pertenece_a_equipo_activo}
+            nombre_equipo == entrenador.equipo_activo ->
+              {:error, :equipo_activo_para_batalla}
 
             length(equipo.pokemones) ==1 ->
               {:error, :equipo_necesita_al_menos_un_pokemon}
@@ -145,6 +159,42 @@ defmodule GestionEquipos do
             true ->
               {:error, :no_tiene_pokemon_inventario}
             end
+          end
+        end
+
+      @doc """
+      Las funcion usar_equipo recibe por parámetro:
+      - Nombre del equipo a usar
+      - entrenador completo con todos los campos
+      La función retorna el entrenador actualizado con el equipo a usar activo
+      """
+
+      def usar_equipo(nombre_equipo,entrenador) do
+
+        case Map.get(entrenador.equipos,nombre_equipo) do
+          nil ->
+            {:error, :no_existe_nombre_equipo}
+
+          equipo ->
+
+            validar=Enum.filter(equipo.pokemones, fn id_pokemon ->
+              not Map.has_key?(entrenador.inventario,id_pokemon)
+            end)
+
+            cond do
+
+            validar != []  ->
+              {:error, :equipo_pokemones_faltantes,validar}
+
+            nombre_equipo==entrenador.equipo_activo ->
+
+              {:error, :equipo_activo_batalla}
+
+            true->
+              entrenador_actualizado= %{entrenador|equipo_activo: nombre_equipo}
+
+              {:equipo_activo,entrenador_actualizado}
+              end
           end
         end
 

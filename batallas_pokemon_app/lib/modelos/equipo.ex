@@ -20,6 +20,10 @@ defmodule Equipo do
     {:ok, %__MODULE__{pokemones: pokemones}}
   end
 
+  def agregar_pokemon(equipo, _id_pokemon) when length(equipo.pokemones) >= 3 do
+    {:error, :equipo_con_cupo_maximo}
+  end
+
   def agregar_pokemon(equipo, id_pokemon) do
     if tiene_pokemon?(equipo,id_pokemon) do
       {:error, :pokemon_pertenece_al_equipo}

@@ -221,9 +221,8 @@ defmodule MenuEquipos do
         agregar_pokemon_equipo(pid)
         loop(pid)
       5 ->
-        :ok #provisional
-        #usar_equipo(pid)
-        #loop(pid)
+        usar_equipo(pid)
+        loop(pid)
       6 ->
         :ok  #Regresa al menu usuario loop_principal
       _ ->
@@ -283,6 +282,19 @@ defmodule MenuEquipos do
         Util.leer("Ingrese el id del pokemon que desea agregar: ",:string),
         pid}) do
 
+      nil ->
+        Util.imprimir_error("No se pudo procesar solicitud")
+      mensaje ->
+        Util.imprimir_mensaje(mensaje)
+    end
+  end
+
+  def usar_equipo(pid) do
+    case GenServer.call(
+      {Servidor, @nodo_servidor},
+      { :usar_equipo,
+        Util.leer("Ingrese el nombre del equipo que desea cargar para batalla: ", :string),
+        pid}) do
       nil ->
         Util.imprimir_error("No se pudo procesar solicitud")
       mensaje ->
