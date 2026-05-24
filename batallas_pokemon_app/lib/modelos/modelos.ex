@@ -52,4 +52,4 @@ defmodule SobrePendiente do
     defstruct [
       :tipo
     ]
-  end
+end

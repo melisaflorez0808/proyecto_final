@@ -81,6 +81,8 @@ defmodule MenuPerfil do
   end
 end
 
+#======================================MenuTienda=========================================
+
 defmodule MenuTienda do
   @nodo_servidor :servidor@localhost
 
@@ -183,6 +185,8 @@ defmodule MenuTienda do
     end
   end
 end
+
+#======================================MenuEquipos=========================================
 
 defmodule MenuEquipos do
   @nodo_servidor :servidor@localhost
@@ -301,5 +305,59 @@ defmodule MenuEquipos do
         Util.imprimir_mensaje(mensaje)
     end
   end
+end
 
+  #======================================MenuIntercambio=========================================
+
+  defmodule MenuIntercambio do
+    @nodo_servidor :servidor@localhost
+
+    def mostrar(pid) do
+      loop(pid)
+    end
+
+    defp loop(pid) do
+      Util.imprimir_mensaje("""
+
+      -------- INTERCAMBIOS ---------
+      1. Crear Sala de Intercambios
+      2. Unirse a sala
+      3. Volver
+      --------------------------
+
+      """)
+
+      opcion = Util.leer("Ingrese una opción: ", :integer)
+
+      case opcion do
+        1 ->
+          crear_sala_intercambio(pid)
+          loop(pid)
+        #2 ->
+          #unirse_sala(pid)
+          #loop(pid)
+        3 ->
+          :ok  #Regresa al menu usuario loop_principal
+        _ ->
+          Util.imprimir_error("Opción inválida. Intente nuevamente")
+          loop(pid)
+      end
+    end
+
+    def crear_sala_intercambio(pid) do
+      case GenServer.call(
+        {Servidor, @nodo_servidor},
+        { :crear_sala_intercambio,
+          pid}) do
+
+        nil ->
+          Util.imprimir_error("No se pudo procesar solicitud")
+        mensaje ->
+          Util.imprimir_mensaje(mensaje)
+      end
+      receive do
+        {:sala_cancelada, codigo} ->
+          Util.imprimir_error("La sala con #{codigo} fue cancelada por timeout")
+        end
+    end
 end

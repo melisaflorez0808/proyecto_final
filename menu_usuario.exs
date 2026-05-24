@@ -1,7 +1,7 @@
 defmodule Usuario do
 
-  Code.require_file("util.exs", __DIR__)
-  Code.require_file("menu_perfil.exs", __DIR__)
+  Code.require_file("util.exs", _DIR_)
+  Code.require_file("menu_perfil.exs", _DIR_)
 
   @nodo_servidor :servidor@localhost
 
@@ -84,9 +84,9 @@ defmodule Usuario do
       2 ->
         MenuTienda.mostrar(pid)
         loop_principal(pid)
-      #3 ->
-      # MenuIntercambio.mostrar(pid)
-      #  loop_principal(pid)
+      3 ->
+        MenuIntercambio.mostrar(pid)
+        loop_principal(pid)
       4 ->
         MenuEquipos.mostrar(pid)
         loop_principal(pid)

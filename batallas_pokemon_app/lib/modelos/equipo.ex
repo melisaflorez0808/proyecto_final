@@ -17,7 +17,7 @@ defmodule Equipo do
   end
 
   def nuevo(pokemones) do
-    {:ok, %__MODULE__{pokemones: pokemones}}
+    {:ok, %_MODULE_{pokemones: pokemones}}
   end
 
   def agregar_pokemon(equipo, _id_pokemon) when length(equipo.pokemones) >= 3 do

@@ -3,6 +3,7 @@ defmodule Servidor do
   use GenServer
 
   def main do
+
     IO.puts("Servidor iniciando....")
     {:ok, _} = Node.start(:servidor@localhost, :shortnames)
     Node.set_cookie(:pokemon)
@@ -11,22 +12,26 @@ defmodule Servidor do
     Process.sleep(:infinity)
   end
 
+
   def start_link() do
     GenServer.start_link(_MODULE, nil, name: __MODULE_)
   end
 
+
   @impl true
   def init(_) do
 
-    #Creo el nuevo Supervisor y el Gestor de Salas que Tiene un Genserver
-    iniciar_salas()
+     {:ok, supervisor} = DynamicSupervisor.start_link(strategy: :one_for_one)
 
     estado = %{
       pokemones: Persistencia.leer_pokemones(),
       movimientos: Persistencia.leer_movimientos(),
       entrenadores: Persistencia.leer_entrenadores(),
       tienda: Persistencia.leer_tienda(),
-      sesiones: %{}
+      sesiones: %{},
+      supervisor: supervisor,
+      batallas: %{},
+      intercambios: %{}
     }
 
     IO.puts("Servidor iniciado correctamente")
@@ -36,22 +41,6 @@ defmodule Servidor do
     IO.inspect(estado.movimientos)
 
     {:ok, estado}
-  end
-
-  defp iniciar_salas do
-    if Process.whereis(Registry.Salas) == nil do
-      {:ok, _} = Registry.start_link(keys: :unique, name: Registry.Salas)
-    end
-
-    #Supervisor de Salas
-    if Process.whereis(SupervisorSalas) == nil do
-      {:ok, _} = DynamicSupervisor.start_link(strategy: :one_for_one, name: SupervisorSalas)
-    end
-
-    #Gestor de Salas en un Genserver
-    if Process.whereis(GestorSalas) == nil do
-      {:ok, _} = GestorSalas.start_link()
-    end
   end
 
   #-------------------- Login ---------------------------------------
@@ -279,6 +268,28 @@ defmodule Servidor do
 
   #------------------ Intercambio Pokemon---------------------------------
 
+  @impl true
+  def handle_call({:crear_sala_intercambio, pid_usuario}, _from, estado) do
+
+    usuario=Map.get(estado.sesiones,pid_usuario)
+
+    case GestionSalas.crear_sala_intercambios(pid_usuario,usuario,estado.supervisor,estado.intercambios) do
+
+      {:ok,{intercambios_actualizados,id_sala,pid}} ->
+
+        Process.monitor(pid)
+
+        nuevo_estado=%{estado | intercambios: intercambios_actualizados}
+
+        {:reply, "Sala creada con id: #{id_sala}", nuevo_estado}
+
+    end
+  end
+
+
+
+
+
 
   #----------------------- Equipos Pokemon -------------------------------
   def handle_call({:crear_equipo,nombre,ids,pid}, _from, estado) do
@@ -360,5 +371,43 @@ defmodule Servidor do
   end
 
    #------------------ Salas de Batalla ---------------------------------
+
+
+
+
+
+   #-------------------Manejo de Mensajes ----------------------------------
+
+   @impl true
+
+   def handle_info({:DOWN, _ref, :process, pid, _reason}, estado) do
+
+    cond do
+      Enum.any?(estado.intercambios, fn {_codigo,pid_sala} ->
+        pid_sala == pid end) ->
+          {id_sala, _pid_sala} =
+            Enum.find(estado.intercambios, fn {_codigo,pid_sala} ->
+              pid_sala == pid end)
+
+        IO.puts("Se eliminó la sala de intercambios #{id_sala}")
+        intercambios_actualizados=Map.delete(estado.intercambios,id_sala)
+        nuevo_estado=%{estado | intercambios: intercambios_actualizados}
+        {:noreply, nuevo_estado}
+
+      Enum.any?(estado.batallas, fn {_codigo,pid_sala} ->
+        pid_sala == pid end) ->
+          {id_sala, _pid_sala} =
+            Enum.find(estado.batallas, fn {_codigo,pid_sala} ->
+              pid_sala == pid end)
+
+        IO.puts("Se eliminó la sala de batallas #{id_sala}")
+        batallas_actualizadas=Map.delete(estado.batallas,id_sala)
+        nuevo_estado=%{estado | batallas: batallas_actualizadas}
+        {:noreply, nuevo_estado}
+
+      true ->
+        {:noreply, estado}
+    end
+  end
 
 end
