@@ -14,7 +14,7 @@ defmodule Servidor do
 
 
   def start_link() do
-    GenServer.start_link(_MODULE, nil, name: __MODULE_)
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
 
@@ -271,7 +271,7 @@ defmodule Servidor do
   @impl true
   def handle_call({:crear_sala_intercambio, pid_usuario}, _from, estado) do
 
-    usuario=Map.get(estado.sesiones,pid_usuario)
+    usuario = Map.get(estado.sesiones, pid_usuario)
 
     case GestionSalas.crear_sala_intercambios(pid_usuario,usuario,estado.supervisor,estado.intercambios) do
 
@@ -285,11 +285,6 @@ defmodule Servidor do
 
     end
   end
-
-
-
-
-
 
   #----------------------- Equipos Pokemon -------------------------------
   def handle_call({:crear_equipo,nombre,ids,pid}, _from, estado) do
@@ -349,65 +344,203 @@ defmodule Servidor do
     end
   end
 
-  def handle_call({:usar_equipo,nombre_equipo,pid}, _from, estado) do
-    usuario=Map.get(estado.sesiones,pid)
-    entrenador=estado.entrenadores[usuario]
+  def handle_call({:usar_equipo, nombre_equipo, pid}, _from, estado) do
+    usuario = Map.get(estado.sesiones, pid)
+    entrenador = estado.entrenadores[usuario]
 
-    case GestionEquipos.usar_equipo(nombre_equipo,entrenador) do
+    case GestionEquipos.usar_equipo(nombre_equipo, entrenador) do
 
-      {:equipo_activo,entrenador_actualizado} ->
-        entrenadores_actualizados=Map.put(estado.entrenadores,usuario,entrenador_actualizado)
-        nuevo_estado=%{estado | entrenadores: entrenadores_actualizados}
+      {:equipo_activo, entrenador_actualizado} ->
+        entrenadores_actualizados = Map.put(estado.entrenadores,usuario,entrenador_actualizado)
+        nuevo_estado = %{estado | entrenadores: entrenadores_actualizados}
         Persistencia.escribir_entrenador(nuevo_estado.entrenadores)
 
-        {:reply, "Equipo #{nombre_equipo} activo para usar en batalla", nuevo_estado}
+        {:reply, {:ok, "Equipo #{nombre_equipo} activo para usar en batalla" }, nuevo_estado}
 
       {:error, :equipo_pokemones_faltantes, validar} ->
-        {:reply, "No se pudo usar equipo, debe quitar pokemon(es) con id: #{inspect(validar)}",estado}
+        {:reply, {:error, "No se pudo usar equipo, debe quitar pokemon(es) con id: #{IO.inspect(validar)}"}, estado}
 
       {:error, razon}->
-        {:reply, razon, estado}
+        {:reply, {:error, razon}, estado}
     end
   end
 
    #------------------ Salas de Batalla ---------------------------------
+  @impl true
+  def handle_call({:crear_sala_batalla, pid_usuario, pokemon_inicial}, _from, estado) do
+
+    usuario = Map.get(estado.sesiones, pid_usuario)
+    entrenador = Map.get(estado.entrenadores, usuario)
+
+    if entrenador.equipo_activo == nil do
+      {:reply, {:error, "No tienes equipo activo"}, estado}
+    else
+      case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
+
+        {:error, razon} ->
+          {:reply, {:error, razon}, estado}
+
+        {:ok, equipo_batalla, pokemon_activo} ->
+          case GestionSalas.crear_sala_batalla(pid_usuario, usuario, pokemon_activo, equipo_batalla, estado.supervisor, estado.batallas) do
+
+            {:ok, {batallas_actualizadas, id_sala, pid_sala}} ->
+              Process.monitor(pid_sala)
+              nuevo_estado = %{ estado | batallas: batallas_actualizadas}
+              {:reply, {:ok, "Sala creada con id #{id_sala}", pid_sala}, nuevo_estado}
+          end
+      end
+    end
+  end
+
+  @impl true
+  def handle_call({:listar_salas, pid_usuario}, _from, estado) do
+
+    usuario = Map.get(estado.sesiones, pid_usuario)
+    case Map.get(estado.entrenadores, usuario) do
+      nil ->
+        {:reply, {:error, "Usuario No Encontrado"}, estado}
+
+      _entrenador ->
+        salas_intercambio =
+          if map_size(estado.intercambios) == 0 do
+            "No hay salas de intercambio activas"
+          else
+            estado.intercambios
+            |> Enum.with_index(1)
+            |> Enum.map(fn {{id_sala, _pid_sala}, index} ->
+              """
+              #{index}. ID Sala: #{id_sala}
+              """
+            end)
+            |> Enum.join("\n")
+          end
 
 
+            salas_batalla =
+              if map_size(estado.batallas) == 0 do
+                "No hay salas de batalla activas"
+              else
+                estado.batallas
+                |> Enum.with_index(1)
+                |> Enum.map(fn {{id_sala, _pid_sala}, index} ->
+                  """
+                  #{index}. ID Sala: #{id_sala}
+                  """
+                end)
+                |> Enum.join("\n")
+              end
 
+            mensaje =
+              """
+              ========= SALAS DE INTERCAMBIO =========
+              #{salas_intercambio}
+              ========= SALAS DE BATALLA =========
+              #{salas_batalla}
+              """
+        {:reply, {:ok, mensaje}, estado}
+    end
+  end
 
+  @impl true
+  def handle_call({:unirse_sala_batalla, pid_usuario, pokemon_inicial, id_sala}, _from, estado) do
+    usuario = Map.get(estado.sesiones, pid_usuario)
+    #PID del proceso para Llamarlo
+    sala = Map.get(estado.batallas, String.upcase(id_sala))
+    entrenador = Map.get(estado.entrenadores, usuario)
+    IO.inspect(estado.batallas)
+    IO.inspect(id_sala)
+    IO.inspect(sala)
 
-   #-------------------Manejo de Mensajes ----------------------------------
+    case sala do
+      nil ->
+        {:reply, {:error,"No Existe Sala de Batalla"}, estado}
+      sala ->
+        pid_sala = sala.pid_sala
+        if entrenador.equipo_activo == nil do
+          {:reply, {:error, "No tienes equipo activo"}, estado}
+        else
+          case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
+            {:error, razon} ->
+              {:reply, {:error, razon}, estado}
 
-   @impl true
+            {:ok, equipo_batalla, pokemon_activo} ->
+              case GenServer.call(pid_sala, {:unirse_sala_batalla, usuario, pid_usuario, equipo_batalla, pokemon_activo}) do
+                {:error,:participantes_completos} ->
+                  {:reply, {:error,"La Sala Tiene los Participantes Completos"}, estado}
+                {:ok, mensaje} ->
+                  sala_actualizada = %{ sala | usuarios: sala.usuarios ++ [pid_usuario]}
+                  batallas_actualizadas =
+                    Map.put(estado.batallas, String.upcase(id_sala), sala_actualizada)
+                    nuevo_estado = %{estado | batallas: batallas_actualizadas}
+                    {:reply, {:ok, mensaje, pid_sala}, nuevo_estado}
+              end
+          end
+        end
+    end
+  end
 
-   def handle_info({:DOWN, _ref, :process, pid, _reason}, estado) do
+  @impl true
+  def handle_cast({:recompensa, pid_usuario, monedas}, estado) do
+
+    usuario = Map.get(estado.sesiones, pid_usuario)
+
+    case Map.get(estado.entrenadores, usuario) do
+
+      nil -> {:noreply, estado}
+
+      entrenador ->
+        entrenador_actualizado = %{entrenador |
+          monedas_actuales: entrenador.monedas_actuales + monedas,
+          monedas_acumuladas: entrenador.monedas_acumuladas + monedas
+        }
+
+        entrenadores_actualizados =
+          Map.put(estado.entrenadores, usuario, entrenador_actualizado)
+
+        nuevo_estado = %{ estado | entrenadores: entrenadores_actualizados}
+
+        Persistencia.escribir_entrenador(entrenadores_actualizados)
+
+        send(pid_usuario, {:mensaje_batalla, "Has recibido #{monedas} monedas"})
+
+        {:noreply, nuevo_estado}
+    end
+  end
+
+    #-------------------Manejo de Mensajes ----------------------------------
+    @impl true
+  def handle_info({:DOWN, _ref, :process, pid, _reason}, estado) do
 
     cond do
       Enum.any?(estado.intercambios, fn {_codigo,pid_sala} ->
-        pid_sala == pid end) ->
-          {id_sala, _pid_sala} =
-            Enum.find(estado.intercambios, fn {_codigo,pid_sala} ->
-              pid_sala == pid end)
+          pid_sala == pid end) ->
+            {id_sala, _pid_sala} =
+              Enum.find(estado.intercambios, fn {_codigo,pid_sala} ->
+                pid_sala == pid end)
 
-        IO.puts("Se eliminó la sala de intercambios #{id_sala}")
-        intercambios_actualizados=Map.delete(estado.intercambios,id_sala)
-        nuevo_estado=%{estado | intercambios: intercambios_actualizados}
-        {:noreply, nuevo_estado}
+          IO.puts("Se eliminó la sala de intercambios #{id_sala}")
+          intercambios_actualizados=Map.delete(estado.intercambios,id_sala)
+          nuevo_estado=%{estado | intercambios: intercambios_actualizados}
+          {:noreply, nuevo_estado}
 
-      Enum.any?(estado.batallas, fn {_codigo,pid_sala} ->
-        pid_sala == pid end) ->
-          {id_sala, _pid_sala} =
-            Enum.find(estado.batallas, fn {_codigo,pid_sala} ->
-              pid_sala == pid end)
+
+      Enum.any?(estado.batallas, fn {_codigo, sala} ->
+        sala.pid_sala == pid
+      end) ->
+
+        {id_sala, _sala} = Enum.find(estado.batallas, fn {_codigo, sala} ->
+          sala.pid_sala == pid end)
 
         IO.puts("Se eliminó la sala de batallas #{id_sala}")
-        batallas_actualizadas=Map.delete(estado.batallas,id_sala)
-        nuevo_estado=%{estado | batallas: batallas_actualizadas}
+
+        batallas_actualizadas = Map.delete(estado.batallas, id_sala)
+
+        nuevo_estado = %{ estado | batallas: batallas_actualizadas}
+
         {:noreply, nuevo_estado}
 
       true ->
         {:noreply, estado}
     end
   end
-
 end

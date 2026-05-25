@@ -1,13 +1,13 @@
 defmodule Usuario do
 
-  Code.require_file("util.exs", _DIR_)
-  Code.require_file("menu_perfil.exs", _DIR_)
+  Code.require_file("util.exs", __DIR__)
+  Code.require_file("menu_perfil.exs", __DIR__)
 
   @nodo_servidor :servidor@localhost
 
   def main do
     IO.puts("Iniciando el nodo usuario....")
-    {:ok, _} = Node.start(:usuario@localhost, :shortnames)
+    {:ok, _} = Node.start(:usuario2@localhost, :shortnames)
     Node.set_cookie(:pokemon)
     IO.puts("El nodo usuario se ha iniciado!")
 
@@ -90,9 +90,9 @@ defmodule Usuario do
       4 ->
         MenuEquipos.mostrar(pid)
         loop_principal(pid)
-      #5 ->
-      #  MenuSalasBatalla.mostrar(pid)
-      #  loop_principal(pid)
+      5 ->
+        MenuBatalla.mostrar(pid)
+        loop_principal(pid)
       6 ->
         Util.imprimir_mensaje("Saliendo......")
       _ ->

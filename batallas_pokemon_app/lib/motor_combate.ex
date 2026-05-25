@@ -1,8 +1,4 @@
 defmodule MotorCombate do
-  @moduledoc """
-  Este módulo contiene las fórmulas que seran llamadas por el Genserver de Batalla para
-  visualizar los turnos, calcular los daños, visualizar los movimientos, etc.
-  """
 
   @efectividades %{
     "Acero" => %{
@@ -180,64 +176,99 @@ defmodule MotorCombate do
     }
   }
 
-  @doc """
-  Función para visualizar turnos por consola, recibe como parámetros:
-   - Turno en el que van actualmente
-   - El id del pokemon activo del rival
-   - Un mapa del equipo rival en la que las claves son los id de los pokemones y guardan todas sus estadisticas
-   - El id del pokemon activo del entrenador
-   - Un mapa del equipo del entrenador en la que las claves son los id de los pokemones y guardan todas sus estadisticas
-  """
+  def calcular_dano(poder, ataque, defensa, tipos_atacante, tipo_mov, tipos_defensor) do
 
-  def visualizar_turno(turno,pokemon_activo_rival,equipo_rival,pokemon_activo_entrenador,equipo_entrenador) do
+    #Bonificación Por Ataque del Mismo Tipo
+    stab = if tipo_mov in tipos_atacante, do: 1.5, else: 1.0
 
-    pokemon_entrenador=Map.get(equipo_entrenador,pokemon_activo_entrenador)
+    tipo_mov = String.capitalize(tipo_mov)
 
-    pokemon_rival=Map.get(equipo_rival,pokemon_activo_rival)
+    tipos_defensor =
+      Enum.map(tipos_defensor, &String.capitalize/1)
+
+    tipos_atacante =
+      Enum.map(tipos_atacante, &String.capitalize/1)
+
+    efectividad = obtener_efectividad(tipo_mov, tipos_defensor)
+
+    factor = :rand.uniform() * 0.15 + 0.85
+
+    dano_base = trunc((poder*(ataque/defensa))/5+2)
+    dano_final = trunc(dano_base * efectividad * stab * factor)
+    max(1,dano_final)
+  end
+
+  def obtener_efectividad(tipo_ataque, tipos_defensor) do
+    Enum.reduce(tipos_defensor, 1.0, fn tipo_defensor, acumulado ->
+
+      tabla_tipo = Map.get(@efectividades, tipo_ataque, %{})
+
+      multiplicador =
+        Map.get(tabla_tipo, tipo_defensor, 1.0)
+
+      acumulado * multiplicador
+    end)
+  end
+
+  #==================== Orden Por Velocidad ====================
+  def orden_por_velocidad({:creador, velocidad_creador}, {:contrincante, velocidad_contrincante}) do
+    cond do
+      velocidad_creador > velocidad_contrincante -> [:creador, :contrincante]
+      velocidad_contrincante > velocidad_creador -> [:contrincante, :creador]
+      true -> Enum.shuffle([:creador, :contrincante])
+    end
+  end
+
+  def visualizar_turno(turno, pokemon_activo_rival, equipo_rival, pokemon_activo_entrenador, equipo_entrenador) do
+
+    pokemon_entrenador = Map.get(equipo_entrenador, pokemon_activo_entrenador)
+
+    pokemon_rival = Map.get(equipo_rival, pokemon_activo_rival)
 
     mensaje_equipo_rival=
-      Enum.map(equipo_rival, fn {pokemon,datos} ->
+      Enum.map(equipo_rival, fn {pokemon, datos} ->
         cond do
           pokemon == pokemon_activo_rival ->
-            "#{datos.nombre} (activo)"
+            "#{datos.especie} (activo)"
           datos.salud <=0 ->
-            "#{datos.nombre} (debilitado)"
+            "#{datos.especie} (debilitado)"
           true ->
-            "#{datos.nombre} (vivo)"
+            "#{datos.especie} (vivo)"
         end
       end)
-      |>Enum.join(" | ")
+      |> Enum.join(" | ")
 
     mensaje_equipo=
-      Enum.map(equipo_entrenador, fn {pokemon,datos} ->
+      Enum.map(equipo_entrenador, fn {pokemon, datos} ->
         cond do
           pokemon == pokemon_activo_entrenador ->
-            "[#{pokemon}] #{datos.nombre} (activo)"
+            "[#{pokemon}] #{datos.especie} (activo)"
           datos.salud <=0 ->
-            "[#{pokemon}] #{datos.nombre} (debilitado)"
+            "[#{pokemon}] #{datos.especie} (debilitado)"
           true ->
-            "[#{pokemon}] #{datos.nombre} (vivo)"
+            "[#{pokemon}] #{datos.especie} (vivo)"
         end
       end)
-      |>Enum.join(" | ")
+      |> Enum.join(" | ")
 
-    movimientos=
+    movimientos =
       pokemon_entrenador.movimientos
       |> Enum.with_index(1)
       |> Enum.map(fn {movimiento, contador} ->
         "#{contador}. " <>
         "#{String.pad_trailing(movimiento.nombre, 15)} " <>
-        "(#{String.pad_trailing(movimiento.elemento <> ",", 11)} " <>
-        "Poder: #{movimiento.poder})"
+        "(#{String.pad_trailing(movimiento.tipo <> ",", 11)} " <>
+        "Poder: #{movimiento.poder_base})"
       end)
       |> Enum.join("\n")
 
     """
-    ===========Turno #{turno}===========
-    Rival: #{pokemon_rival.nombre} #{pokemon_rival.elemento} | Salud: #{pokemon_rival.salud}/100
+
+    ================================= Turno #{turno} =================================
+    Rival: #{pokemon_rival.especie} (#{Enum.join(pokemon_rival.elemento, "/")}) | Salud: #{pokemon_rival.salud}/100
     Equipo rival: #{mensaje_equipo_rival}
 
-    Tu Pokemon: [#{pokemon_activo_entrenador}] #{pokemon_entrenador.nombre} (#{pokemon_entrenador.elemento}) | Dueño original: #{pokemon_entrenador.dueno_original} | Salud: #{pokemon_entrenador.salud}/100 | Vel: #{pokemon_entrenador.velocidad}
+    Tu Pokemon: [#{pokemon_activo_entrenador}] #{pokemon_entrenador.especie} (#{pokemon_entrenador.elemento}) | Dueño original: #{pokemon_entrenador.dueno_original} | Salud: #{pokemon_entrenador.salud}/100 | Vel: #{pokemon_entrenador.velocidad}
     Tu Equipo: #{mensaje_equipo}
     Movimientos:
     #{movimientos}
@@ -249,38 +280,6 @@ defmodule MotorCombate do
 
     Acción:
     """
-  end
-
-  @doc """
-  La función de obtener efectividad recibe el tipo de ataque y los tipos defensor que pueden ser por ejemplo =>
-   tipo_ataque = "Electrico"
-   tipos_defensor = ["Agua", "Volador"]
-  La función recorre la lista de tipos defensor y utiliza la constante definida de efectividades para conseguir el valor de la efectividad
-  o en su defecto 1. Se debe tener en cuenta que hay ataques que la efectividad es 0, lo que anularía el daño, por ejemplo un ataque de lucha
-  contra
-  """
-
-  def obtener_efectividad(tipo_ataque, tipos_defensor) do
-    Enum.reduce(tipos_defensor, 1.0, fn tipo_defensor, acumulado ->
-      multiplicador =
-        @efectividades
-        |> Map.get(tipo_ataque)
-        |> Map.get(tipo_defensor, 1.0)
-
-        acumulado * multiplicador
-    end)
-  end
-
-  def calcular_dano(poder_movimiento,ataque_atacante,defensa_defensor,tipos_atacante,tipo_ataque,tipos_defensor) do
-    stab =
-      if tipo_ataque in tipos_atacante, do: 1.5, else: 1.0
-    factor_aleatorio= :rand.uniform() * 0.15 + 0.85
-
-    dano_base=trunc((poder_movimiento*(ataque_atacante/defensa_defensor))/5+2)
-    dano_final=trunc(dano_base*obtener_efectividad(tipo_ataque,tipos_defensor)*stab*factor_aleatorio)
-
-    max(1,dano_final)
-
   end
 
 end

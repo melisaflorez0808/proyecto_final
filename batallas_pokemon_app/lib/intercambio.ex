@@ -2,7 +2,7 @@ defmodule Intercambio do
   use GenServer
 
   def start_link({id_sala,creador,pid_creador}) do
-    GenServer.start_link(_MODULE_, {id_sala,creador,pid_creador})
+    GenServer.start_link(__MODULE__, {id_sala,creador,pid_creador})
   end
 
   @impl true
