@@ -25,6 +25,7 @@ end
 defmodule PokemonInstancia do
     @enforce_keys [:especie, :dueno_original, :rareza, :ataque, :defensa, :velocidad, :movimientos]
     defstruct [
+      :id,
       :especie,
       :dueno_original,
       :rareza,
@@ -37,6 +38,7 @@ end
 
 defmodule Entrenador do
     defstruct [
+      :nombre,
       :clave,
       :victorias,
       :monedas_actuales,

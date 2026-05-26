@@ -39,7 +39,7 @@ defmodule SistemaSobres do
         movs = asignar_movimientos(base, moves_map)
         stats = asignar_valores_instancia( base.ataque_base, base.defensa_base, base.velocidad_base, rareza)
 
-        id_pokemon = generar_id_unico()
+        id_pokemon = generar_id()
 
         #Convertir movimientos a struct
         movimientos =
@@ -54,6 +54,7 @@ defmodule SistemaSobres do
         #Crear struct PokemonInstancia
         pokemon =
           %PokemonInstancia{
+            id: id_pokemon,
             especie: especie,
             dueno_original: dueno,
             rareza: rareza,
@@ -183,8 +184,8 @@ defmodule SistemaSobres do
   end
 
   #Ojo, desde antes debo mandar una lista con los ids existentes
-  defp generar_id_unico do
-    UUID.uuid4()
+  def generar_id() do
+    :crypto.strong_rand_bytes(4) |> Base.encode16()
   end
 
   def generar_especie(pokemon_map, id) do

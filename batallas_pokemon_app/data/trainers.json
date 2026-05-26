@@ -1,339 +1,384 @@
 {
   "carlos": {
-    "clave": "123",
-    "equipo_activo": "equipo_1",
-    "equipos": {
-      "equipo_1": {
-        "pokemones": [
-          "48291",
-          "71834"
-        ]
-      }
-    },
     "inventario": {
-      "031fd8fa-3d8a-4663-88a8-59db272c1e01": {
+      "01498EAD": {
+        "id": "01498EAD",
+        "especie": "Eevee",
         "movimientos": [
           {
-            "tipo": "Agua",
-            "nombre": "pistola_agua",
-            "poder_base": 34
-          },
-          {
-            "tipo": "Volador",
-            "nombre": "ataque_ala",
-            "poder_base": 32
-          },
-          {
-            "tipo": "Normal",
             "nombre": "placaje",
+            "tipo": "Normal",
             "poder_base": 30
           },
           {
-            "tipo": "Bicho",
-            "nombre": "picadura",
-            "poder_base": 47
-          }
-        ],
-        "ataque": 115,
-        "defensa": 91,
-        "dueno_original": "carlos",
-        "especie": "Gyarados",
-        "rareza": "raro",
-        "velocidad": 81
-      },
-      "2c64b869-3b1c-4526-9f21-c028244d2966": {
-        "movimientos": [
-          {
-            "tipo": "Agua",
-            "nombre": "acua_jet",
-            "poder_base": 40
-          },
-          {
-            "tipo": "Hielo",
-            "nombre": "rayo_hielo",
-            "poder_base": 31
-          },
-          {
-            "tipo": "Planta",
-            "nombre": "drenadoras",
-            "poder_base": 85
-          },
-          {
-            "tipo": "Hada",
-            "nombre": "beso_drenaje",
-            "poder_base": 119
-          }
-        ],
-        "ataque": 94,
-        "defensa": 70,
-        "dueno_original": "carlos",
-        "especie": "Cloyster",
-        "rareza": "comun",
-        "velocidad": 72
-      },
-      "3ae2d496-e15f-4673-a00d-1fdef3aeb56f": {
-        "movimientos": [
-          {
-            "tipo": "Normal",
-            "nombre": "golpe_cabeza",
-            "poder_base": 70
-          },
-          {
-            "tipo": "Volador",
-            "nombre": "tajo_aereo",
-            "poder_base": 112
-          },
-          {
-            "tipo": "Fuego",
-            "nombre": "lanzallamas",
-            "poder_base": 42
-          },
-          {
-            "tipo": "Planta",
-            "nombre": "latigo_cepa",
-            "poder_base": 47
-          }
-        ],
-        "ataque": 99,
-        "defensa": 68,
-        "dueno_original": "carlos",
-        "especie": "Fearow",
-        "rareza": "raro",
-        "velocidad": 37
-      },
-      "3fa347df-6552-4c77-a894-e33e1be6200c": {
-        "movimientos": [
-          {
-            "tipo": "Tierra",
-            "nombre": "bofeton_lodo",
-            "poder_base": 95
-          },
-          {
-            "tipo": "Tierra",
-            "nombre": "disparo_lodo",
-            "poder_base": 74
-          },
-          {
-            "tipo": "Bicho",
-            "nombre": "acoso",
-            "poder_base": 20
-          },
-          {
-            "tipo": "Tierra",
-            "nombre": "fuerza_tierra",
-            "poder_base": 123
-          }
-        ],
-        "ataque": 51,
-        "defensa": 39,
-        "dueno_original": "carlos",
-        "especie": "Diglett",
-        "rareza": "raro",
-        "velocidad": 48
-      },
-      "463a4923-abea-4254-981d-619a858523ad": {
-        "movimientos": [
-          {
-            "tipo": "Planta",
-            "nombre": "latigo_cepa",
-            "poder_base": 47
-          },
-          {
-            "tipo": "Psiquico",
-            "nombre": "reflejo",
-            "poder_base": 93
-          },
-          {
-            "tipo": "Dragon",
-            "nombre": "drago_aliento",
-            "poder_base": 59
-          },
-          {
-            "tipo": "Normal",
             "nombre": "mega_patada",
+            "tipo": "Normal",
             "poder_base": 106
-          }
-        ],
-        "ataque": 51,
-        "defensa": 47,
-        "dueno_original": "carlos",
-        "especie": "Exeggcute",
-        "rareza": "raro",
-        "velocidad": 82
-      },
-      "48291": {
-        "movimientos": [
-          {
-            "tipo": "fuego",
-            "nombre": "ascuas",
-            "poder_base": 30
           },
           {
-            "tipo": "normal",
-            "nombre": "placaje",
-            "poder_base": 35
+            "nombre": "hoja_afilada",
+            "tipo": "Planta",
+            "poder_base": 52
+          },
+          {
+            "nombre": "rapidez",
+            "tipo": "Normal",
+            "poder_base": 60
           }
         ],
-        "ataque": 53,
-        "defensa": 44,
+        "ataque": 64,
+        "defensa": 62,
         "dueno_original": "carlos",
-        "especie": "Charmander",
         "rareza": "comun",
-        "velocidad": 66
+        "velocidad": 76
       },
-      "57fd31f6-fdc5-4419-aeed-6857231781d4": {
+      "334859": {
+        "id": "334859",
+        "especie": "Magmar",
         "movimientos": [
           {
-            "tipo": "Fuego",
             "nombre": "ascuas",
+            "tipo": "Fuego",
             "poder_base": 62
           },
           {
-            "tipo": "Fuego",
             "nombre": "lanzallamas",
+            "tipo": "Fuego",
             "poder_base": 42
           },
           {
-            "tipo": "Agua",
             "nombre": "hidrobomba",
+            "tipo": "Agua",
             "poder_base": 78
           },
           {
-            "tipo": "Acero",
             "nombre": "cola_ferrea",
+            "tipo": "Acero",
             "poder_base": 42
           }
         ],
         "ataque": 96,
         "defensa": 79,
         "dueno_original": "carlos",
-        "especie": "Magmar",
         "rareza": "comun",
         "velocidad": 66
       },
-      "655ccb29-05d9-4404-860b-151db0a06630": {
+      "33582": {
+        "id": "33582",
+        "especie": "Bulbasaur",
         "movimientos": [
           {
-            "tipo": "Psiquico",
-            "nombre": "reflejo",
-            "poder_base": 93
+            "nombre": "latigo_cepa",
+            "tipo": "Planta",
+            "poder_base": 47
           },
           {
-            "tipo": "Psiquico",
-            "nombre": "psiquico",
+            "nombre": "hoja_afilada",
+            "tipo": "Planta",
+            "poder_base": 52
+          },
+          {
+            "nombre": "gigadrenado",
+            "tipo": "Planta",
+            "poder_base": 103
+          },
+          {
+            "nombre": "drenadoras",
+            "tipo": "Planta",
+            "poder_base": 85
+          }
+        ],
+        "ataque": 51,
+        "defensa": 52,
+        "dueno_original": "carlos",
+        "rareza": "comun",
+        "velocidad": 47
+      },
+      "48291": {
+        "id": "48291",
+        "especie": "Charmander",
+        "movimientos": [
+          {
+            "nombre": "ascuas",
+            "tipo": "fuego",
             "poder_base": 30
           },
           {
-            "tipo": "Bicho",
-            "nombre": "zumbido",
-            "poder_base": 109
-          },
-          {
-            "tipo": "Hielo",
-            "nombre": "canto_helado",
-            "poder_base": 96
+            "nombre": "placaje",
+            "tipo": "normal",
+            "poder_base": 35
           }
         ],
-        "ataque": 63,
-        "defensa": 42,
+        "ataque": 53,
+        "defensa": 44,
         "dueno_original": "carlos",
-        "especie": "Mew",
         "rareza": "comun",
-        "velocidad": 49
+        "velocidad": 66
       },
-      "71834": {
+      "66105": {
+        "id": "66105",
+        "especie": "Articuno",
         "movimientos": [
           {
-            "tipo": "electrico",
+            "nombre": "rayo_hielo",
+            "tipo": "Hielo",
+            "poder_base": 31
+          },
+          {
+            "nombre": "ventisca",
+            "tipo": "Hielo",
+            "poder_base": 58
+          },
+          {
+            "nombre": "vuelo",
+            "tipo": "Volador",
+            "poder_base": 95
+          },
+          {
+            "nombre": "tajo_aereo",
+            "tipo": "Volador",
+            "poder_base": 112
+          }
+        ],
+        "ataque": 90,
+        "defensa": 103,
+        "dueno_original": "carlos",
+        "rareza": "legendario",
+        "velocidad": 89
+      },
+      "67C6C84D": {
+        "id": "67C6C84D",
+        "especie": "Omanyte",
+        "movimientos": [
+          {
+            "nombre": "tumba_rocas",
+            "tipo": "Roca",
+            "poder_base": 108
+          },
+          {
+            "nombre": "acua_jet",
+            "tipo": "Agua",
+            "poder_base": 40
+          },
+          {
+            "nombre": "tinieblas",
+            "tipo": "Fantasma",
+            "poder_base": 83
+          },
+          {
+            "nombre": "rapidez",
+            "tipo": "Normal",
+            "poder_base": 60
+          }
+        ],
+        "ataque": 50,
+        "defensa": 59,
+        "dueno_original": "carlos",
+        "rareza": "comun",
+        "velocidad": 35
+      },
+      "71834": {
+        "id": "71834",
+        "especie": "Pikachu",
+        "movimientos": [
+          {
             "nombre": "impactrueno",
+            "tipo": "electrico",
             "poder_base": 65
           },
           {
-            "tipo": "electrico",
             "nombre": "chispa",
+            "tipo": "electrico",
             "poder_base": 50
           }
         ],
         "ataque": 63,
         "defensa": 46,
         "dueno_original": "carlos",
-        "especie": "Pikachu",
         "rareza": "raro",
         "velocidad": 104
       },
-      "93c0c26c-9488-40f5-b3d8-0a22421f3ac2": {
+      "E2FA97B7": {
+        "id": "E2FA97B7",
+        "especie": "Poliwhirl",
         "movimientos": [
           {
-            "tipo": "Agua",
             "nombre": "acua_jet",
+            "tipo": "Agua",
             "poder_base": 40
           },
           {
-            "tipo": "Veneno",
-            "nombre": "colmillo_veneno",
-            "poder_base": 65
-          },
-          {
-            "tipo": "Volador",
-            "nombre": "ataque_ala",
-            "poder_base": 32
-          },
-          {
-            "tipo": "Fuego",
-            "nombre": "giro_fuego",
-            "poder_base": 76
-          }
-        ],
-        "ataque": 53,
-        "defensa": 51,
-        "dueno_original": "carlos",
-        "especie": "Tentacool",
-        "rareza": "comun",
-        "velocidad": 61
-      },
-      "aa0dbfa7-1ef5-4f43-b616-3de9c029cdcf": {
-        "movimientos": [
-          {
+            "nombre": "cascada",
             "tipo": "Agua",
-            "nombre": "pistola_agua",
-            "poder_base": 34
+            "poder_base": 80
           },
           {
-            "tipo": "Veneno",
             "nombre": "toxico",
+            "tipo": "Veneno",
             "poder_base": 91
           },
           {
-            "tipo": "Agua",
+            "nombre": "zumbido",
+            "tipo": "Bicho",
+            "poder_base": 109
+          }
+        ],
+        "ataque": 60,
+        "defensa": 52,
+        "dueno_original": "carlos",
+        "rareza": "raro",
+        "velocidad": 57
+      }
+    },
+    "equipos": {
+      "equipo_1": {
+        "pokemones": [
+          "48291",
+          "71834"
+        ]
+      },
+      "tierra": {
+        "pokemones": [
+          "33582",
+          "48291"
+        ]
+      }
+    },
+    "equipo_activo": "equipo_1",
+    "clave": "123",
+    "monedas_actuales": 200,
+    "monedas_acumuladas": 500,
+    "nombre": "Carlos",
+    "sobres_pendientes": {
+      "0D807896": {
+        "tipo": "basico"
+      },
+      "98C2FD48": {
+        "tipo": "basico"
+      },
+      "sp2": {
+        "tipo": "avanzado"
+      }
+    },
+    "victorias": 5
+  },
+  "juan": {
+    "inventario": {
+      "7F814F89": {
+        "id": "7F814F89",
+        "especie": "Weezing",
+        "movimientos": [
+          {
+            "nombre": "acido",
+            "tipo": "Veneno",
+            "poder_base": 44
+          },
+          {
+            "nombre": "bomba_lodo",
+            "tipo": "Veneno",
+            "poder_base": 69
+          },
+          {
+            "nombre": "lanzarrocas",
+            "tipo": "Roca",
+            "poder_base": 36
+          },
+          {
+            "nombre": "hoja_afilada",
+            "tipo": "Planta",
+            "poder_base": 52
+          }
+        ],
+        "ataque": 70,
+        "defensa": 57,
+        "dueno_original": "juan",
+        "rareza": "comun",
+        "velocidad": 35
+      },
+      "ABAE9AA0": {
+        "id": "ABAE9AA0",
+        "especie": "Kabuto",
+        "movimientos": [
+          {
+            "nombre": "avalancha",
+            "tipo": "Roca",
+            "poder_base": 54
+          },
+          {
             "nombre": "hidrobomba",
+            "tipo": "Agua",
             "poder_base": 78
           },
           {
-            "tipo": "Dragon",
-            "nombre": "garra_dragon",
-            "poder_base": 34
+            "nombre": "ventisca",
+            "tipo": "Hielo",
+            "poder_base": 58
+          },
+          {
+            "nombre": "ataque_ala",
+            "tipo": "Volador",
+            "poder_base": 32
           }
         ],
-        "ataque": 52,
-        "defensa": 49,
-        "dueno_original": "carlos",
-        "especie": "Tentacool",
+        "ataque": 69,
+        "defensa": 52,
+        "dueno_original": "juan",
         "rareza": "comun",
-        "velocidad": 60
+        "velocidad": 39
+      },
+      "C436FD48": {
+        "id": "C436FD48",
+        "especie": "Lickitung",
+        "movimientos": [
+          {
+            "nombre": "destructor",
+            "tipo": "Normal",
+            "poder_base": 80
+          },
+          {
+            "nombre": "placaje",
+            "tipo": "Normal",
+            "poder_base": 30
+          },
+          {
+            "nombre": "toxico",
+            "tipo": "Veneno",
+            "poder_base": 91
+          },
+          {
+            "nombre": "carantona",
+            "tipo": "Hada",
+            "poder_base": 84
+          }
+        ],
+        "ataque": 82,
+        "defensa": 63,
+        "dueno_original": "juan",
+        "rareza": "raro",
+        "velocidad": 50
       }
     },
-    "monedas_actuales": 380,
-    "monedas_acumuladas": 730,
-    "sobres_pendientes": {},
-    "victorias": 5
-  },
-  "melisa": {
-    "clave": "1996",
-    "equipo_activo": null,
     "equipos": {},
-    "inventario": {},
+    "equipo_activo": null,
+    "clave": "123",
     "monedas_actuales": null,
     "monedas_acumuladas": null,
+    "nombre": "Juan",
+    "sobres_pendientes": {
+      "E18B5107": {
+        "tipo": "basico"
+      }
+    },
+    "victorias": null
+  },
+  "melisa": {
+    "inventario": {},
+    "equipos": {},
+    "equipo_activo": null,
+    "clave": "1996",
+    "monedas_actuales": null,
+    "monedas_acumuladas": null,
+    "nombre": "Melisa",
     "sobres_pendientes": {
       "322b34d2-7de5-4dc3-90fb-7ce39042931e": {
         "tipo": "basico"
@@ -342,296 +387,539 @@
     "victorias": null
   },
   "sebas": {
-    "clave": "1094",
-    "equipo_activo": "ganadores",
-    "equipos": {
-      "ganadores": {
-        "pokemones": [
-          "33582"
-        ]
-      },
-      "rapido": {
-        "pokemones": [
-          "48291",
-          "33582"
-        ]
-      }
-    },
     "inventario": {
-      "02691052-60ae-4dde-b48a-1fcec88e8392": {
+      "0269105": {
+        "id": "0269105",
+        "especie": "Ponyta",
         "movimientos": [
           {
-            "tipo": "Fuego",
             "nombre": "llamarada",
+            "tipo": "Fuego",
             "poder_base": 110
           },
           {
-            "tipo": "Fuego",
             "nombre": "giro_fuego",
+            "tipo": "Fuego",
             "poder_base": 76
           },
           {
-            "tipo": "Electrico",
             "nombre": "chispa",
+            "tipo": "Electrico",
             "poder_base": 91
           },
           {
-            "tipo": "Dragon",
             "nombre": "pulso_dragon",
+            "tipo": "Dragon",
             "poder_base": 85
           }
         ],
         "ataque": 72,
         "defensa": 64,
         "dueno_original": "sebas",
-        "especie": "Ponyta",
         "rareza": "raro",
         "velocidad": 38
       },
       "10477": {
+        "id": "10477",
+        "especie": "Squirtle",
         "movimientos": [
           {
-            "tipo": "Agua",
             "nombre": "pistola_agua",
+            "tipo": "Agua",
             "poder_base": 34
           },
           {
-            "tipo": "Agua",
             "nombre": "surf",
+            "tipo": "Agua",
             "poder_base": 52
           },
           {
-            "tipo": "Agua",
             "nombre": "acua_jet",
+            "tipo": "Agua",
             "poder_base": 40
           },
           {
-            "tipo": "Agua",
             "nombre": "cascada",
+            "tipo": "Agua",
             "poder_base": 80
           }
         ],
         "ataque": 50,
         "defensa": 67,
         "dueno_original": "carlos",
-        "especie": "Squirtle",
         "rareza": "comun",
         "velocidad": 45
       },
-      "33582": {
+      "21666223": {
+        "id": "21666223",
+        "especie": "Vileplume",
         "movimientos": [
           {
-            "tipo": "Planta",
             "nombre": "latigo_cepa",
+            "tipo": "Planta",
             "poder_base": 47
           },
           {
-            "tipo": "Planta",
-            "nombre": "hoja_afilada",
-            "poder_base": 52
+            "nombre": "picotazo_veneno",
+            "tipo": "Veneno",
+            "poder_base": 75
           },
           {
-            "tipo": "Planta",
-            "nombre": "gigadrenado",
-            "poder_base": 103
-          },
-          {
-            "tipo": "Planta",
-            "nombre": "drenadoras",
-            "poder_base": 85
-          }
-        ],
-        "ataque": 51,
-        "defensa": 52,
-        "dueno_original": "carlos",
-        "especie": "Bulbasaur",
-        "rareza": "comun",
-        "velocidad": 47
-      },
-      "48291": {
-        "movimientos": [
-          {
-            "tipo": "Fuego",
-            "nombre": "ascuas",
-            "poder_base": 62
-          },
-          {
-            "tipo": "Fuego",
-            "nombre": "lanzallamas",
-            "poder_base": 42
-          },
-          {
-            "tipo": "Fuego",
-            "nombre": "giro_fuego",
-            "poder_base": 76
-          },
-          {
-            "tipo": "Normal",
-            "nombre": "placaje",
-            "poder_base": 30
-          }
-        ],
-        "ataque": 53,
-        "defensa": 44,
-        "dueno_original": "carlos",
-        "especie": "Charmander",
-        "rareza": "comun",
-        "velocidad": 66
-      },
-      "64c9e11a-2fd6-4e71-9629-92d3a4399d58": {
-        "movimientos": [
-          {
-            "tipo": "Tierra",
             "nombre": "bofeton_lodo",
+            "tipo": "Tierra",
             "poder_base": 95
           },
           {
+            "nombre": "garra_dragon",
+            "tipo": "Dragon",
+            "poder_base": 34
+          }
+        ],
+        "ataque": 51,
+        "defensa": 59,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 59
+      },
+      "218495": {
+        "id": "218495",
+        "especie": "Marowak",
+        "movimientos": [
+          {
+            "nombre": "bofeton_lodo",
             "tipo": "Tierra",
+            "poder_base": 95
+          },
+          {
             "nombre": "terremoto",
+            "tipo": "Tierra",
             "poder_base": 31
           },
           {
-            "tipo": "Electrico",
             "nombre": "voltio_cruel",
+            "tipo": "Electrico",
             "poder_base": 102
           },
           {
-            "tipo": "Agua",
             "nombre": "hidrobomba",
+            "tipo": "Agua",
             "poder_base": 78
           }
         ],
         "ataque": 84,
         "defensa": 85,
         "dueno_original": "sebas",
-        "especie": "Marowak",
         "rareza": "comun",
         "velocidad": 33
       },
-      "66105": {
+      "294056": {
+        "id": "294056",
+        "especie": "Tentacool",
         "movimientos": [
           {
-            "tipo": "Hielo",
-            "nombre": "rayo_hielo",
-            "poder_base": 31
+            "nombre": "pistola_agua",
+            "tipo": "Agua",
+            "poder_base": 34
           },
           {
-            "tipo": "Hielo",
-            "nombre": "ventisca",
-            "poder_base": 58
-          },
-          {
-            "tipo": "Volador",
-            "nombre": "vuelo",
-            "poder_base": 95
-          },
-          {
-            "tipo": "Volador",
-            "nombre": "tajo_aereo",
-            "poder_base": 112
-          }
-        ],
-        "ataque": 90,
-        "defensa": 103,
-        "dueno_original": "carlos",
-        "especie": "Articuno",
-        "rareza": "legendario",
-        "velocidad": 89
-      },
-      "71834": {
-        "movimientos": [
-          {
-            "tipo": "Electrico",
-            "nombre": "impactrueno",
-            "poder_base": 49
-          },
-          {
-            "tipo": "Electrico",
-            "nombre": "chispa",
+            "nombre": "toxico",
+            "tipo": "Veneno",
             "poder_base": 91
           },
           {
-            "tipo": "Electrico",
-            "nombre": "rayo",
-            "poder_base": 68
+            "nombre": "hidrobomba",
+            "tipo": "Agua",
+            "poder_base": 78
           },
           {
-            "tipo": "Electrico",
-            "nombre": "electrobola",
-            "poder_base": 60
+            "nombre": "garra_dragon",
+            "tipo": "Dragon",
+            "poder_base": 34
           }
         ],
-        "ataque": 63,
-        "defensa": 46,
+        "ataque": 52,
+        "defensa": 49,
         "dueno_original": "carlos",
-        "especie": "Pikachu",
-        "rareza": "raro",
-        "velocidad": 104
+        "rareza": "comun",
+        "velocidad": 60
       },
-      "7294b6f9-24b5-49b3-bc07-a9d1db0a8228": {
+      "3454965": {
+        "id": "3454965",
+        "especie": "Beedrill",
         "movimientos": [
           {
-            "tipo": "Bicho",
             "nombre": "zumbido",
+            "tipo": "Bicho",
             "poder_base": 109
           },
           {
-            "tipo": "Veneno",
             "nombre": "colmillo_veneno",
+            "tipo": "Veneno",
             "poder_base": 65
           },
           {
-            "tipo": "Roca",
             "nombre": "avalancha",
+            "tipo": "Roca",
             "poder_base": 54
           },
           {
-            "tipo": "Hielo",
             "nombre": "rayo_hielo",
+            "tipo": "Hielo",
             "poder_base": 31
           }
         ],
         "ataque": 65,
         "defensa": 51,
         "dueno_original": "sebas",
-        "especie": "Beedrill",
         "rareza": "raro",
         "velocidad": 35
       },
-      "90214": {
+      "48291": {
+        "id": "48291",
+        "especie": "Charmander",
         "movimientos": [
           {
+            "nombre": "ascuas",
+            "tipo": "Fuego",
+            "poder_base": 62
+          },
+          {
+            "nombre": "lanzallamas",
+            "tipo": "Fuego",
+            "poder_base": 42
+          },
+          {
+            "nombre": "giro_fuego",
+            "tipo": "Fuego",
+            "poder_base": 76
+          },
+          {
+            "nombre": "placaje",
+            "tipo": "Normal",
+            "poder_base": 30
+          }
+        ],
+        "ataque": 53,
+        "defensa": 44,
+        "dueno_original": "carlos",
+        "rareza": "comun",
+        "velocidad": 66
+      },
+      "599048": {
+        "id": "599048",
+        "especie": "Mew",
+        "movimientos": [
+          {
+            "nombre": "reflejo",
+            "tipo": "Psiquico",
+            "poder_base": 93
+          },
+          {
+            "nombre": "psiquico",
+            "tipo": "Psiquico",
+            "poder_base": 30
+          },
+          {
+            "nombre": "zumbido",
+            "tipo": "Bicho",
+            "poder_base": 109
+          },
+          {
+            "nombre": "canto_helado",
+            "tipo": "Hielo",
+            "poder_base": 96
+          }
+        ],
+        "ataque": 63,
+        "defensa": 42,
+        "dueno_original": "carlos",
+        "rareza": "comun",
+        "velocidad": 49
+      },
+      "71834": {
+        "id": "71834",
+        "especie": "Pikachu",
+        "movimientos": [
+          {
+            "nombre": "impactrueno",
+            "tipo": "Electrico",
+            "poder_base": 49
+          },
+          {
+            "nombre": "chispa",
+            "tipo": "Electrico",
+            "poder_base": 91
+          },
+          {
+            "nombre": "rayo",
+            "tipo": "Electrico",
+            "poder_base": 68
+          },
+          {
+            "nombre": "electrobola",
+            "tipo": "Electrico",
+            "poder_base": 60
+          }
+        ],
+        "ataque": 63,
+        "defensa": 46,
+        "dueno_original": "carlos",
+        "rareza": "raro",
+        "velocidad": 104
+      },
+      "733456": {
+        "id": "733456",
+        "especie": "Jynx",
+        "movimientos": [
+          {
+            "nombre": "colmillo_hielo",
+            "tipo": "Hielo",
+            "poder_base": 93
+          },
+          {
+            "nombre": "paz_mental",
+            "tipo": "Psiquico",
+            "poder_base": 129
+          },
+          {
+            "nombre": "tumba_rocas",
             "tipo": "Roca",
+            "poder_base": 108
+          },
+          {
+            "nombre": "gigadrenado",
+            "tipo": "Planta",
+            "poder_base": 103
+          }
+        ],
+        "ataque": 59,
+        "defensa": 57,
+        "dueno_original": "sebas",
+        "rareza": "raro",
+        "velocidad": 46
+      },
+      "8889004": {
+        "id": "8889004",
+        "especie": "Nidorina",
+        "movimientos": [
+          {
+            "nombre": "acido",
+            "tipo": "Veneno",
+            "poder_base": 44
+          },
+          {
+            "nombre": "gas_veneno",
+            "tipo": "Veneno",
+            "poder_base": 85
+          },
+          {
+            "nombre": "colmillo_hielo",
+            "tipo": "Hielo",
+            "poder_base": 93
+          },
+          {
+            "nombre": "latigo_cepa",
+            "tipo": "Planta",
+            "poder_base": 47
+          }
+        ],
+        "ataque": 65,
+        "defensa": 61,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 36
+      },
+      "90214": {
+        "id": "90214",
+        "especie": "Onix",
+        "movimientos": [
+          {
             "nombre": "lanzarrocas",
+            "tipo": "Roca",
             "poder_base": 36
           },
           {
-            "tipo": "Roca",
             "nombre": "avalancha",
+            "tipo": "Roca",
             "poder_base": 54
           },
           {
-            "tipo": "Tierra",
             "nombre": "terremoto",
+            "tipo": "Tierra",
             "poder_base": 31
           },
           {
-            "tipo": "Tierra",
             "nombre": "fuerza_tierra",
+            "tipo": "Tierra",
             "poder_base": 123
           }
         ],
         "ataque": 49,
         "defensa": 165,
         "dueno_original": "carlos",
-        "especie": "Onix",
         "rareza": "epico",
         "velocidad": 72
+      },
+      "9426F142": {
+        "id": "9426F142",
+        "especie": "Charmeleon",
+        "movimientos": [
+          {
+            "nombre": "llamarada",
+            "tipo": "Fuego",
+            "poder_base": 110
+          },
+          {
+            "nombre": "colmillo_igneo",
+            "tipo": "Fuego",
+            "poder_base": 85
+          },
+          {
+            "nombre": "cabeza_zen",
+            "tipo": "Psiquico",
+            "poder_base": 92
+          },
+          {
+            "nombre": "canto_helado",
+            "tipo": "Hielo",
+            "poder_base": 96
+          }
+        ],
+        "ataque": 66,
+        "defensa": 55,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 28
+      },
+      "957733": {
+        "id": "957733",
+        "especie": "Electrode",
+        "movimientos": [
+          {
+            "nombre": "rayo",
+            "tipo": "Electrico",
+            "poder_base": 68
+          },
+          {
+            "nombre": "onda_trueno",
+            "tipo": "Electrico",
+            "poder_base": 127
+          },
+          {
+            "nombre": "golpe_dinamico",
+            "tipo": "Lucha",
+            "poder_base": 51
+          },
+          {
+            "nombre": "voz_cautivadora",
+            "tipo": "Hada",
+            "poder_base": 99
+          }
+        ],
+        "ataque": 49,
+        "defensa": 64,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 84
+      },
+      "DD8B094F": {
+        "id": "DD8B094F",
+        "especie": "Farfetchd",
+        "movimientos": [
+          {
+            "nombre": "ataque_rapido",
+            "tipo": "Normal",
+            "poder_base": 40
+          },
+          {
+            "nombre": "vuelo",
+            "tipo": "Volador",
+            "poder_base": 95
+          },
+          {
+            "nombre": "karate_chop",
+            "tipo": "Lucha",
+            "poder_base": 36
+          },
+          {
+            "nombre": "metalaser",
+            "tipo": "Acero",
+            "poder_base": 95
+          }
+        ],
+        "ataque": 53,
+        "defensa": 43,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 28
+      },
+      "EE682BAC": {
+        "id": "EE682BAC",
+        "especie": "Rapidash",
+        "movimientos": [
+          {
+            "nombre": "ascuas",
+            "tipo": "Fuego",
+            "poder_base": 62
+          },
+          {
+            "nombre": "llamarada",
+            "tipo": "Fuego",
+            "poder_base": 110
+          },
+          {
+            "nombre": "electrobola",
+            "tipo": "Electrico",
+            "poder_base": 60
+          },
+          {
+            "nombre": "tajo_aereo",
+            "tipo": "Volador",
+            "poder_base": 112
+          }
+        ],
+        "ataque": 79,
+        "defensa": 63,
+        "dueno_original": "sebas",
+        "rareza": "comun",
+        "velocidad": 54
       }
     },
-    "monedas_actuales": 960,
-    "monedas_acumuladas": 1160,
-    "sobres_pendientes": {},
+    "equipos": {
+      "fuego": {
+        "pokemones": [
+          "EE682BAC",
+          "DD8B094F"
+        ]
+      },
+      "los_mejores": {
+        "pokemones": [
+          "3454965",
+          "48291",
+          "294056"
+        ]
+      },
+      "rapido": {
+        "pokemones": [
+          "294056",
+          "48291",
+          "33582"
+        ]
+      }
+    },
+    "equipo_activo": "los_mejores",
+    "clave": "1094",
+    "monedas_actuales": 200,
+    "monedas_acumuladas": 1000,
+    "nombre": "Sebas",
+    "sobres_pendientes": {
+      "582928B8": {
+        "tipo": "basico"
+      },
+      "E0B86D64": {
+        "tipo": "avanzado"
+      }
+    },
     "victorias": 10
   }
 }

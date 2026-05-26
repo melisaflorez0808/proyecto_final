@@ -203,8 +203,9 @@ defmodule MenuEquipos do
     2. Listar Equipos
     3. Quitar pokemon de equipo
     4. Agregar pokemon a equipo
-    5. Usar Equipo
-    6. Volver
+    5. Eliminar equipo
+    6. Usar Equipo
+    7. Volver
     --------------------------
 
     """)
@@ -225,9 +226,12 @@ defmodule MenuEquipos do
         agregar_pokemon_equipo(pid)
         loop(pid)
       5 ->
-        usar_equipo(pid)
+        eliminar_equipo(pid)
         loop(pid)
       6 ->
+        usar_equipo(pid)
+        loop(pid)
+      7 ->
         :ok  #Regresa al menu usuario loop_principal
       _ ->
         Util.imprimir_error("Opción inválida. Intente nuevamente")
@@ -243,10 +247,10 @@ defmodule MenuEquipos do
         Util.leer("Ingrese los ids de los pokemones a incluir separados por espacio (Máximo 3 pokemones válidos): ",:string),
         pid}) do
 
-      nil ->
-        Util.imprimir_error("No se pudo procesar solicitud")
-      mensaje ->
+      {:ok, mensaje} ->
         Util.imprimir_mensaje(mensaje)
+      {:error,mensaje} ->
+        Util.imprimir_error(mensaje)
     end
   end
 
@@ -256,10 +260,10 @@ defmodule MenuEquipos do
       { :ver_equipos,
         pid}) do
 
-      nil ->
-        Util.imprimir_error("No se pudo procesar solicitud")
-      {:ok,mensaje} ->
+      {:ok, mensaje} ->
         Util.imprimir_mensaje(mensaje)
+      {:error,mensaje} ->
+        Util.imprimir_error(mensaje)
     end
   end
 
@@ -271,10 +275,10 @@ defmodule MenuEquipos do
         Util.leer("Ingrese el id del pokemon que desea quitar: ",:string),
         pid}) do
 
-      nil ->
-        Util.imprimir_error("No se pudo procesar solicitud")
-      mensaje ->
+      {:ok, mensaje} ->
         Util.imprimir_mensaje(mensaje)
+      {:error,mensaje} ->
+        Util.imprimir_error(mensaje)
     end
   end
 
@@ -286,22 +290,36 @@ defmodule MenuEquipos do
         Util.leer("Ingrese el id del pokemon que desea agregar: ",:string),
         pid}) do
 
-      nil ->
-        Util.imprimir_error("No se pudo procesar solicitud")
-      mensaje ->
+      {:ok, mensaje} ->
         Util.imprimir_mensaje(mensaje)
+      {:error,mensaje} ->
+        Util.imprimir_error(mensaje)
+    end
+  end
+
+  def eliminar_equipo(pid) do
+    case GenServer.call(
+      {Servidor, @nodo_servidor},
+      { :eliminar_equipo,
+        Util.leer("Ingrese el nombre del equipo que desea eliminar: ", :string),
+        pid}) do
+
+      {:ok, mensaje} ->
+        Util.imprimir_mensaje(mensaje)
+      {:error,mensaje} ->
+        Util.imprimir_error(mensaje)
     end
   end
 
   def usar_equipo(pid) do
     case GenServer.call(
       {Servidor, @nodo_servidor},
-      { :usar_equipo,
+      {:usar_equipo,
         Util.leer("Ingrese el nombre del equipo que desea cargar para batalla: ", :string),
         pid}) do
-      nil ->
-        Util.imprimir_error("No se pudo procesar solicitud")
-      mensaje ->
+      {:ok, mensaje} ->
+        Util.imprimir_mensaje(mensaje)
+      {:error, mensaje} ->
         Util.imprimir_mensaje(mensaje)
     end
   end
@@ -309,7 +327,7 @@ end
 
   #======================================MenuIntercambio=========================================
 
-defmodule MenuIntercambio do
+  defmodule MenuIntercambio do
     @nodo_servidor :servidor@localhost
 
     def mostrar(pid) do
@@ -332,10 +350,10 @@ defmodule MenuIntercambio do
       case opcion do
         1 ->
           crear_sala_intercambio(pid)
-          loop(pid)
-        #2 ->
-          #unirse_sala(pid)
-          #loop(pid)
+
+        2 ->
+          unirse_sala_intercambio(pid)
+
         3 ->
           :ok  #Regresa al menu usuario loop_principal
         _ ->
@@ -345,18 +363,146 @@ defmodule MenuIntercambio do
     end
 
     def crear_sala_intercambio(pid) do
-      case GenServer.call({Servidor, @nodo_servidor}, { :crear_sala_intercambio, pid}) do
-        nil ->
-          Util.imprimir_error("No se pudo procesar solicitud")
-        mensaje ->
+      case GenServer.call(
+        {Servidor, @nodo_servidor},
+        { :crear_sala_intercambio,
+          pid}) do
+
+        {:error,mensaje} ->
+          Util.imprimir_error(mensaje)
+          loop(pid)
+        {:ok,mensaje} ->
           Util.imprimir_mensaje(mensaje)
+          loop_intercambios(pid)
       end
-      receive do
-        {:sala_cancelada, codigo} ->
-          Util.imprimir_error("La sala con #{codigo} fue cancelada por timeout")
-        end
     end
-end
+
+    def unirse_sala_intercambio(pid) do
+      case GenServer.call(
+        {Servidor, @nodo_servidor},
+        {:unirse_sala_intercambio,
+        Util.leer("Ingrese el código de la sala de intercambio a la que se desea unir: ", :string),
+        pid}) do
+
+        {:error,mensaje} ->
+          Util.imprimir_error(mensaje)
+          loop(pid)
+        {:ok,mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          loop_intercambios(pid)
+        end
+
+    end
+
+    def loop_intercambios(pid) do
+
+      receive do
+
+        {:sala_creada, _id_sala} ->
+          Util.imprimir_mensaje("Esperando conexión del otro usuario...")
+          loop_intercambios(pid)
+
+        {:sala_cancelada, codigo} ->
+          Util.imprimir_mensaje("La sala con codigo #{codigo} fue cancelada")
+          loop(pid)
+
+        {:unido_sala, mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          loop_intercambios(pid)
+
+        {:intercambio_completado, mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          loop(pid)
+
+        {:ofrecimiento,mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          loop_intercambios(pid)
+
+        {:opciones,mensaje,id_sala} ->
+          case manejar_opciones(mensaje,id_sala,pid) do
+            :continuar ->
+              loop_intercambios(pid)
+            :volver_menu ->
+              loop(pid)
+          end
+      end
+    end
+
+    def procesar_mensajes_pendientes(pid) do
+      receive do
+
+        {:intercambio_completado, mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          procesar_mensajes_pendientes(pid)
+
+        {:sala_cancelada, codigo} ->
+          Util.imprimir_mensaje("La sala con codigo #{codigo} fue cancelada")
+          procesar_mensajes_pendientes(pid)
+
+        {:ofrecimiento, mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          procesar_mensajes_pendientes(pid)
+
+        {:unido_sala, mensaje} ->
+          Util.imprimir_mensaje(mensaje)
+          procesar_mensajes_pendientes(pid)
+
+      after
+        10 ->
+          :ok
+      end
+    end
+
+    def  manejar_opciones(mensaje,id_sala,pid) do
+
+      procesar_mensajes_pendientes(pid)
+
+      entrada =
+        Util.leer(mensaje, :string)
+        |> String.downcase()
+        |> String.split(" ", trim: true)
+
+      case entrada do
+        [] ->
+          Util.imprimir_error("Ingrese una opción válida")
+          manejar_opciones(mensaje,id_sala,pid)
+        [opcion|resto] ->
+          accion =
+            case opcion do
+              "ofrecer_pokemon" -> :ofrecer_pokemon
+              "confirmar_intercambio" -> :confirmar_intercambio
+              "cancelar_intercambio" -> :cancelar_intercambio
+              _ -> :error
+            end
+
+          id_pokemon = List.first(resto)
+
+          case GenServer.call({Servidor, @nodo_servidor},
+          {:accion_intercambio,accion,id_pokemon,mensaje,id_sala,pid}) do
+
+            {:error,:valor_incorrecto} ->
+              Util.imprimir_error("No ingreso ninguna opción válida, intente nuevamente: ")
+              :continuar
+
+            {:error,mensaje} ->
+              Util.imprimir_error(mensaje)
+              :continuar
+
+            {:ok,:cancelado} ->
+              Util.imprimir_mensaje("Se canceló el intercambio")
+              :volver_menu
+
+            {:ok,mensaje} ->
+              Util.imprimir_mensaje(mensaje)
+              :continuar
+            end
+        end
+      end
+  end
+
+
+
+ #======================================MenuBatalla=========================================
 
 defmodule MenuBatalla do
 

@@ -169,6 +169,28 @@ defmodule GestionEquipos do
   end
 
   @doc """
+  Las funcion eliminar_equipo recibe por parámetro:
+  - nombre del equipo que desea eliminar
+  La función retorna el entrenador actualizado con el equipo eliminado
+  """
+
+  def eliminar_equipo(nombre_equipo, entrenador) do
+    case Map.get(entrenador.equipos, nombre_equipo) do
+      nil ->
+        {:error, :no_existe_nombre_equipo}
+
+      equipo ->
+        if nombre_equipo==entrenador.equipo_activo do
+          {:error, :equipo_activo_para_batalla}
+        else
+          equipos_actualizado = Map.delete(entrenador.equipos, nombre_equipo)
+          entrenador_actualizado = %{entrenador | equipos: equipos_actualizado}
+          {:ok, entrenador_actualizado}
+        end
+    end
+  end
+
+  @doc """
   Las funcion usar_equipo recibe por parámetro:
   - Nombre del equipo a usar
   - entrenador completo con todos los campos

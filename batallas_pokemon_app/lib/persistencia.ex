@@ -76,6 +76,7 @@ defmodule Persistencia do
           {
             usuario,
             %Entrenador{
+              nombre: datos["nombre"],
               clave: datos["clave"],
               victorias: datos["victorias"],
               monedas_actuales: datos["monedas_actuales"],
@@ -108,6 +109,7 @@ defmodule Persistencia do
       {
         id,
         %PokemonInstancia{
+          id: pokemon["id"],
           especie: pokemon["especie"],
           dueno_original: pokemon["dueno_original"],
           rareza: pokemon["rareza"],
@@ -150,6 +152,7 @@ defmodule Persistencia do
         {
           usuario,
           %{
+            nombre: datos.nombre,
             clave: datos.clave,
             victorias: datos.victorias,
             monedas_actuales: datos.monedas_actuales,
@@ -160,6 +163,7 @@ defmodule Persistencia do
                 {
                   id,
                   %{
+                    id: pokemon.id,
                     especie: pokemon.especie,
                     dueno_original: pokemon.dueno_original,
                     rareza: pokemon.rareza,
