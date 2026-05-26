@@ -220,6 +220,7 @@ defmodule GestionEquipos do
       {:error, "Equipo no encontrado"}
     else
       equipo_batalla =
+
         Enum.reduce(equipo.pokemones, %{}, fn id_pokemon, acc ->
 
             pokemon_inventario = Map.get(entrenador.inventario, id_pokemon)

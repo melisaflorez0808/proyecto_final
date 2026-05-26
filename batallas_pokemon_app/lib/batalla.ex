@@ -176,6 +176,7 @@ defmodule Batalla do
         GenServer.cast({Servidor, @nodo_servidor}, {:recompensa, estado.pid_creador, 30})
         send(estado.pid_contrincante, {:ganador, "¡Ganaste la Batalla. Recibes 100 Monedas!"})
         send(estado.pid_creador, {:perdedor, "Perdiste la Batalla. Recibes 30 Monedas"})
+        LoggerBatallas.guardar_batalla(self(), estado.creador, estado.contrincante)
         {:stop, :normal, estado_despues}
 
       equipo_debilitado?(estado_despues.equipo_contrincante) ->
@@ -184,6 +185,7 @@ defmodule Batalla do
         GenServer.cast({Servidor, @nodo_servidor}, {:recompensa, estado.pid_contrincante, 30})
         send(estado.pid_creador, {:ganador, "¡Ganaste la Batalla. Recibes 100 Monedas!"})
         send(estado.pid_contrincante, {:perdedor, "Perdiste la Batalla. Recibes 30 Monedas"})
+        LoggerBatallas.guardar_batalla(self(), estado.creador, estado.contrincante)
         {:stop, :normal, estado_despues}
 
       #Si aún pueden batallar
@@ -222,8 +224,8 @@ defmodule Batalla do
         estado.equipo_contrincante
       )
 
-    send(estado.pid_creador, {:turno, mensaje_creador})
-    send(estado.pid_contrincante,{:turno, mensaje_contrincante})
+    send(estado.pid_creador, {:turno, estado.turno, mensaje_creador})
+    send(estado.pid_contrincante,{:turno, estado.turno, mensaje_contrincante})
   end
 
   defp ejecutar_acciones([primero, segundo], accion_creador, accion_contrincante, estado) do

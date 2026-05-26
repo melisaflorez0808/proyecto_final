@@ -398,21 +398,38 @@ defmodule MenuBatalla do
     end
   end
 
+  #*****MODIFICADA
   def crear_sala_batalla(pid) do
-    equipo = Util.leer("Ingrese el Nombre del Equipo a Usar en Batalla: ", :string)
-    case GenServer.call({Servidor, @nodo_servidor}, {:usar_equipo, equipo, pid}) do
-      {:ok, mensaje} ->
-        Util.imprimir_mensaje(mensaje)
-        pokemon_inicial = Util.leer("Ingrese el id del Pokemon Inicial: ", :string)
-        case GenServer.call({Servidor, @nodo_servidor}, {:crear_sala_batalla, pid, pokemon_inicial}) do
-          {:ok, mensaje_sala, pid_sala} ->
-            Util.imprimir_mensaje(mensaje_sala)
-            loop_batallas(pid, pid_sala)
+
+    pokemon_inicial = Util.leer("Ingrese el id del Pokemon Inicial: ", :string)
+
+    case GenServer.call( {Servidor, @nodo_servidor}, {:crear_sala_batalla, pid, pokemon_inicial}) do
+
+      {:ok, mensaje_sala, pid_sala} ->
+        Util.imprimir_mensaje(mensaje_sala)
+        loop_batallas(pid, pid_sala)
+
+      {:error, "No tienes equipo activo"} ->
+        equipo = Util.leer("Ingrese el Nombre del Equipo a Usar en Batalla: ", :string)
+
+        case GenServer.call({Servidor, @nodo_servidor}, {:usar_equipo, equipo, pid}) do
+
+          {:ok, mensaje} ->
+            Util.imprimir_mensaje(mensaje)
+
+            case GenServer.call({Servidor, @nodo_servidor},{:crear_sala_batalla, pid, pokemon_inicial}) do
+
+              {:ok, mensaje_sala, pid_sala} ->
+                Util.imprimir_mensaje(mensaje_sala)
+                loop_batallas(pid, pid_sala)
+
+              {:error, razon} ->
+                Util.imprimir_error(razon)
+            end
 
           {:error, razon} ->
             Util.imprimir_error(razon)
         end
-
       {:error, razon} ->
         Util.imprimir_error(razon)
     end
@@ -428,18 +445,35 @@ defmodule MenuBatalla do
     end
   end
 
+  #*****MODIFICADA
   def unirse_sala_batalla(pid) do
+
     sala_a_unirse = Util.leer("Ingrese el Código de la Sala de Batalla a la que se Desea Unir: ", :string)
-    equipo = Util.leer("Ingrese el Nombre del Equipo a Usar en Batalla: ", :string)
-    case GenServer.call({Servidor, @nodo_servidor}, {:usar_equipo, equipo, pid}) do
-      {:ok, mensaje} ->
-        Util.imprimir_mensaje(mensaje)
-        pokemon_inicial = Util.leer("Ingrese el id del Pokemon Inicial: ", :string)
-        case GenServer.call({Servidor, @nodo_servidor}, {:unirse_sala_batalla, pid, pokemon_inicial, sala_a_unirse}) do
-          {:ok, mensaje_sala, pid_sala} ->
-            Util.imprimir_mensaje(mensaje_sala)
-            #Voy a Escuchar
-            loop_batallas(pid, pid_sala)
+    pokemon_inicial = Util.leer("Ingrese el Id del Pokemon Inicial: ", :string)
+
+    case GenServer.call({Servidor, @nodo_servidor}, {:unirse_sala_batalla, pid, pokemon_inicial, sala_a_unirse}) do
+
+      {:ok, mensaje_sala, pid_sala} ->
+        Util.imprimir_mensaje(mensaje_sala)
+        loop_batallas(pid, pid_sala)
+
+      {:error, "No tienes equipo activo"} ->
+        equipo = Util.leer("Ingrese el Nombre del Equipo a Usar en Batalla: ", :string)
+
+        case GenServer.call({Servidor, @nodo_servidor}, {:usar_equipo, equipo, pid}) do
+
+          {:ok, mensaje} ->
+            Util.imprimir_mensaje(mensaje)
+
+            case GenServer.call({Servidor, @nodo_servidor}, {:unirse_sala_batalla, pid, pokemon_inicial, sala_a_unirse}) do
+
+              {:ok, mensaje_sala, pid_sala} ->
+                Util.imprimir_mensaje(mensaje_sala)
+                loop_batallas(pid, pid_sala)
+
+              {:error, razon} ->
+                Util.imprimir_error(razon)
+            end
 
           {:error, razon} ->
             Util.imprimir_error(razon)
@@ -475,33 +509,80 @@ defmodule MenuBatalla do
   end
 
   defp loop_batalla_turnos(pid_usuario, pid_sala) do
+
     receive do
-      # Mostrar turno
-      {:turno, mensaje} ->
+
+      {:turno, turno, mensaje} ->
+
         Util.imprimir_mensaje(mensaje)
+        padre = self()
 
-        accion =
-          Util.leer("Acción (ataque nombre_movimiento | cambiar ID | rendirse): ", :string)
+        # Proceso separado SOLO para leer input
+        spawn(fn ->
+          accion = Util.leer("Acción (ataque nombre_movimiento | cambiar ID | rendirse): ",:string)
 
-        GenServer.cast(pid_sala, {:accion, pid_usuario, accion})
+          #Enviamos acción al proceso principal
+          send(padre, {:accion_usuario, turno, accion})
+        end)
+
+        #Igual Quedo Escuchando
+        esperar_accion(pid_usuario, pid_sala, turno)
+
+    {:resultado_turno, mensaje} ->
+      Util.imprimir_mensaje(mensaje)
+      loop_batalla_turnos(pid_usuario, pid_sala)
+
+    {:ganador, mensaje} ->
+      Util.imprimir_mensaje(mensaje)
+      loop(pid_usuario)
+
+    {:perdedor, mensaje} ->
+      Util.imprimir_error(mensaje)
+      loop(pid_usuario)
+  end
+end
+
+  defp esperar_accion(pid_usuario, pid_sala, turno_actual) do
+
+    receive do
+
+      {:accion_usuario, turno_msg, accion} ->
+
+        # Solo acepto acción si pertenece al turno actual
+        if turno_msg == turno_actual do
+
+          GenServer.cast(pid_sala, {:accion, pid_usuario, accion})
+
+        end
 
         loop_batalla_turnos(pid_usuario, pid_sala)
 
-      # Resultado de turno
       {:resultado_turno, mensaje} ->
+
         Util.imprimir_mensaje(mensaje)
         loop_batalla_turnos(pid_usuario, pid_sala)
 
-      # Ganador
+
+      {:turno, nuevo_turno, mensaje} ->
+
+        Util.imprimir_mensaje(mensaje)
+
+        padre = self()
+
+        spawn(fn -> accion =
+            Util.leer( "Acción (ataque nombre_movimiento | cambiar ID | rendirse): ", :string)
+          send(padre, {:accion_usuario, nuevo_turno, accion})
+        end)
+
+        esperar_accion(pid_usuario, pid_sala, nuevo_turno)
+
       {:ganador, mensaje} ->
         Util.imprimir_mensaje(mensaje)
         loop(pid_usuario)
 
-      # Perdedor
       {:perdedor, mensaje} ->
         Util.imprimir_error(mensaje)
         loop(pid_usuario)
-
     end
   end
 end

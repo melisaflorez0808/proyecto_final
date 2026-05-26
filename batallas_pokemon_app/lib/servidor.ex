@@ -287,6 +287,7 @@ defmodule Servidor do
   end
 
   #----------------------- Equipos Pokemon -------------------------------
+
   def handle_call({:crear_equipo,nombre,ids,pid}, _from, estado) do
     usuario=Map.get(estado.sesiones,pid)
     entrenador=estado.entrenadores[usuario]
@@ -366,29 +367,54 @@ defmodule Servidor do
   end
 
    #------------------ Salas de Batalla ---------------------------------
+
+  #*****MODIFICADA
   @impl true
   def handle_call({:crear_sala_batalla, pid_usuario, pokemon_inicial}, _from, estado) do
 
     usuario = Map.get(estado.sesiones, pid_usuario)
     entrenador = Map.get(estado.entrenadores, usuario)
 
-    if entrenador.equipo_activo == nil do
-      {:reply, {:error, "No tienes equipo activo"}, estado}
-    else
-      case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
+    case preparar_equipo_batalla(pid_usuario, estado) do
+      {:error, razon} ->
+        {:reply, {:error, razon}, estado}
 
-        {:error, razon} ->
-          {:reply, {:error, razon}, estado}
+      {:sin_equipo_activo, _entrenador} ->
+        {:reply, {:error, "No tienes equipo activo"}, estado}
 
-        {:ok, equipo_batalla, pokemon_activo} ->
-          case GestionSalas.crear_sala_batalla(pid_usuario, usuario, pokemon_activo, equipo_batalla, estado.supervisor, estado.batallas) do
+        {:ok, entrenador} ->
 
-            {:ok, {batallas_actualizadas, id_sala, pid_sala}} ->
-              Process.monitor(pid_sala)
-              nuevo_estado = %{ estado | batallas: batallas_actualizadas}
-              {:reply, {:ok, "Sala creada con id #{id_sala}", pid_sala}, nuevo_estado}
-          end
+          case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
+
+            {:error, razon} ->
+              {:reply, {:error, razon}, estado}
+
+            {:ok, equipo_batalla, pokemon_activo} ->
+
+              case GestionSalas.crear_sala_batalla(pid_usuario, usuario, pokemon_activo, equipo_batalla, estado.supervisor, estado.batallas) do
+
+                {:ok, {batallas_actualizadas, id_sala, pid_sala}} ->
+                  Process.monitor(pid_sala)
+                  nuevo_estado = %{ estado | batallas: batallas_actualizadas}
+                  {:reply, {:ok, "Sala creada con id #{id_sala}. Esperando que Alguien se Una...", pid_sala}, nuevo_estado}
+              end
       end
+    end
+  end
+
+  #*****MODIFICADA
+  defp preparar_equipo_batalla(pid_usuario, estado) do
+    usuario = Map.get(estado.sesiones, pid_usuario)
+    entrenador = Map.get(estado.entrenadores, usuario)
+
+    cond do
+      entrenador == nil ->
+        {:error, "Entrenador no encontrado"}
+
+      entrenador.equipo_activo == nil ->
+        {:sin_equipo_activo, entrenador}
+      true ->
+        {:ok, entrenador}
     end
   end
 
@@ -415,32 +441,32 @@ defmodule Servidor do
             |> Enum.join("\n")
           end
 
+          salas_batalla =
+            if map_size(estado.batallas) == 0 do
+              "No hay salas de batalla activas"
+            else
+              estado.batallas
+              |> Enum.with_index(1)
+              |> Enum.map(fn {{id_sala, _pid_sala}, index} ->
+                """
+                #{index}. ID Sala: #{id_sala}
+                """
+              end)
+              |> Enum.join("\n")
+            end
 
-            salas_batalla =
-              if map_size(estado.batallas) == 0 do
-                "No hay salas de batalla activas"
-              else
-                estado.batallas
-                |> Enum.with_index(1)
-                |> Enum.map(fn {{id_sala, _pid_sala}, index} ->
-                  """
-                  #{index}. ID Sala: #{id_sala}
-                  """
-                end)
-                |> Enum.join("\n")
-              end
-
-            mensaje =
-              """
-              ========= SALAS DE INTERCAMBIO =========
-              #{salas_intercambio}
-              ========= SALAS DE BATALLA =========
-              #{salas_batalla}
-              """
-        {:reply, {:ok, mensaje}, estado}
+          mensaje =
+            """
+            ========= SALAS DE INTERCAMBIO =========
+            #{salas_intercambio}
+            ========= SALAS DE BATALLA =========
+            #{salas_batalla}
+            """
+      {:reply, {:ok, mensaje}, estado}
     end
   end
 
+  #*****MODIFICADA
   @impl true
   def handle_call({:unirse_sala_batalla, pid_usuario, pokemon_inicial, id_sala}, _from, estado) do
     usuario = Map.get(estado.sesiones, pid_usuario)
@@ -456,25 +482,30 @@ defmodule Servidor do
         {:reply, {:error,"No Existe Sala de Batalla"}, estado}
       sala ->
         pid_sala = sala.pid_sala
-        if entrenador.equipo_activo == nil do
-          {:reply, {:error, "No tienes equipo activo"}, estado}
-        else
-          case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
-            {:error, razon} ->
-              {:reply, {:error, razon}, estado}
 
-            {:ok, equipo_batalla, pokemon_activo} ->
-              case GenServer.call(pid_sala, {:unirse_sala_batalla, usuario, pid_usuario, equipo_batalla, pokemon_activo}) do
-                {:error,:participantes_completos} ->
-                  {:reply, {:error,"La Sala Tiene los Participantes Completos"}, estado}
-                {:ok, mensaje} ->
-                  sala_actualizada = %{ sala | usuarios: sala.usuarios ++ [pid_usuario]}
-                  batallas_actualizadas =
-                    Map.put(estado.batallas, String.upcase(id_sala), sala_actualizada)
-                    nuevo_estado = %{estado | batallas: batallas_actualizadas}
-                    {:reply, {:ok, mensaje, pid_sala}, nuevo_estado}
-              end
-          end
+        case preparar_equipo_batalla(pid_usuario, estado) do
+
+          {:error, razon} -> {:reply, {:error, razon}, estado}
+
+          {:sin_equipo_activo, _entrenador} -> {:reply, {:error, "No tienes equipo activo"}, estado}
+
+          {:ok, entrenador} ->
+            case GestionEquipos.armar_equipo_batalla(estado.pokemones, entrenador, pokemon_inicial) do
+              {:error, razon} ->
+                {:reply, {:error, razon}, estado}
+
+              {:ok, equipo_batalla, pokemon_activo} ->
+                case GenServer.call(pid_sala, {:unirse_sala_batalla, usuario, pid_usuario, equipo_batalla, pokemon_activo}) do
+                  {:error,:participantes_completos} ->
+                    {:reply, {:error,"La Sala Tiene los Participantes Completos"}, estado}
+                  {:ok, mensaje} ->
+                    sala_actualizada = %{ sala | usuarios: sala.usuarios ++ [pid_usuario]}
+                    batallas_actualizadas =
+                      Map.put(estado.batallas, String.upcase(id_sala), sala_actualizada)
+                      nuevo_estado = %{estado | batallas: batallas_actualizadas}
+                      {:reply, {:ok, mensaje, pid_sala}, nuevo_estado}
+                end
+            end
         end
     end
   end

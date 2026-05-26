@@ -7,7 +7,7 @@ defmodule Usuario do
 
   def main do
     IO.puts("Iniciando el nodo usuario....")
-    {:ok, _} = Node.start(:usuario2@localhost, :shortnames)
+    {:ok, _} = Node.start(:usuario7@localhost, :shortnames)
     Node.set_cookie(:pokemon)
     IO.puts("El nodo usuario se ha iniciado!")
 

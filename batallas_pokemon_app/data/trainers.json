@@ -1,7 +1,7 @@
 {
   "carlos": {
-    "equipo_activo": null,
     "clave": "123",
+    "equipo_activo": "equipo_1",
     "equipos": {
       "equipo_1": {
         "pokemones": [
@@ -11,6 +11,156 @@
       }
     },
     "inventario": {
+      "031fd8fa-3d8a-4663-88a8-59db272c1e01": {
+        "movimientos": [
+          {
+            "tipo": "Agua",
+            "nombre": "pistola_agua",
+            "poder_base": 34
+          },
+          {
+            "tipo": "Volador",
+            "nombre": "ataque_ala",
+            "poder_base": 32
+          },
+          {
+            "tipo": "Normal",
+            "nombre": "placaje",
+            "poder_base": 30
+          },
+          {
+            "tipo": "Bicho",
+            "nombre": "picadura",
+            "poder_base": 47
+          }
+        ],
+        "ataque": 115,
+        "defensa": 91,
+        "dueno_original": "carlos",
+        "especie": "Gyarados",
+        "rareza": "raro",
+        "velocidad": 81
+      },
+      "2c64b869-3b1c-4526-9f21-c028244d2966": {
+        "movimientos": [
+          {
+            "tipo": "Agua",
+            "nombre": "acua_jet",
+            "poder_base": 40
+          },
+          {
+            "tipo": "Hielo",
+            "nombre": "rayo_hielo",
+            "poder_base": 31
+          },
+          {
+            "tipo": "Planta",
+            "nombre": "drenadoras",
+            "poder_base": 85
+          },
+          {
+            "tipo": "Hada",
+            "nombre": "beso_drenaje",
+            "poder_base": 119
+          }
+        ],
+        "ataque": 94,
+        "defensa": 70,
+        "dueno_original": "carlos",
+        "especie": "Cloyster",
+        "rareza": "comun",
+        "velocidad": 72
+      },
+      "3ae2d496-e15f-4673-a00d-1fdef3aeb56f": {
+        "movimientos": [
+          {
+            "tipo": "Normal",
+            "nombre": "golpe_cabeza",
+            "poder_base": 70
+          },
+          {
+            "tipo": "Volador",
+            "nombre": "tajo_aereo",
+            "poder_base": 112
+          },
+          {
+            "tipo": "Fuego",
+            "nombre": "lanzallamas",
+            "poder_base": 42
+          },
+          {
+            "tipo": "Planta",
+            "nombre": "latigo_cepa",
+            "poder_base": 47
+          }
+        ],
+        "ataque": 99,
+        "defensa": 68,
+        "dueno_original": "carlos",
+        "especie": "Fearow",
+        "rareza": "raro",
+        "velocidad": 37
+      },
+      "3fa347df-6552-4c77-a894-e33e1be6200c": {
+        "movimientos": [
+          {
+            "tipo": "Tierra",
+            "nombre": "bofeton_lodo",
+            "poder_base": 95
+          },
+          {
+            "tipo": "Tierra",
+            "nombre": "disparo_lodo",
+            "poder_base": 74
+          },
+          {
+            "tipo": "Bicho",
+            "nombre": "acoso",
+            "poder_base": 20
+          },
+          {
+            "tipo": "Tierra",
+            "nombre": "fuerza_tierra",
+            "poder_base": 123
+          }
+        ],
+        "ataque": 51,
+        "defensa": 39,
+        "dueno_original": "carlos",
+        "especie": "Diglett",
+        "rareza": "raro",
+        "velocidad": 48
+      },
+      "463a4923-abea-4254-981d-619a858523ad": {
+        "movimientos": [
+          {
+            "tipo": "Planta",
+            "nombre": "latigo_cepa",
+            "poder_base": 47
+          },
+          {
+            "tipo": "Psiquico",
+            "nombre": "reflejo",
+            "poder_base": 93
+          },
+          {
+            "tipo": "Dragon",
+            "nombre": "drago_aliento",
+            "poder_base": 59
+          },
+          {
+            "tipo": "Normal",
+            "nombre": "mega_patada",
+            "poder_base": 106
+          }
+        ],
+        "ataque": 51,
+        "defensa": 47,
+        "dueno_original": "carlos",
+        "especie": "Exeggcute",
+        "rareza": "raro",
+        "velocidad": 82
+      },
       "48291": {
         "movimientos": [
           {
@@ -111,6 +261,36 @@
         "rareza": "raro",
         "velocidad": 104
       },
+      "93c0c26c-9488-40f5-b3d8-0a22421f3ac2": {
+        "movimientos": [
+          {
+            "tipo": "Agua",
+            "nombre": "acua_jet",
+            "poder_base": 40
+          },
+          {
+            "tipo": "Veneno",
+            "nombre": "colmillo_veneno",
+            "poder_base": 65
+          },
+          {
+            "tipo": "Volador",
+            "nombre": "ataque_ala",
+            "poder_base": 32
+          },
+          {
+            "tipo": "Fuego",
+            "nombre": "giro_fuego",
+            "poder_base": 76
+          }
+        ],
+        "ataque": 53,
+        "defensa": 51,
+        "dueno_original": "carlos",
+        "especie": "Tentacool",
+        "rareza": "comun",
+        "velocidad": 61
+      },
       "aa0dbfa7-1ef5-4f43-b616-3de9c029cdcf": {
         "movimientos": [
           {
@@ -142,18 +322,14 @@
         "velocidad": 60
       }
     },
-    "monedas_actuales": 400,
-    "monedas_acumuladas": 500,
-    "sobres_pendientes": {
-      "sp2": {
-        "tipo": "avanzado"
-      }
-    },
+    "monedas_actuales": 380,
+    "monedas_acumuladas": 730,
+    "sobres_pendientes": {},
     "victorias": 5
   },
   "melisa": {
-    "equipo_activo": null,
     "clave": "1996",
+    "equipo_activo": null,
     "equipos": {},
     "inventario": {},
     "monedas_actuales": null,
@@ -166,8 +342,8 @@
     "victorias": null
   },
   "sebas": {
-    "equipo_activo": null,
     "clave": "1094",
+    "equipo_activo": "ganadores",
     "equipos": {
       "ganadores": {
         "pokemones": [
@@ -453,8 +629,8 @@
         "velocidad": 72
       }
     },
-    "monedas_actuales": 800,
-    "monedas_acumuladas": 1000,
+    "monedas_actuales": 960,
+    "monedas_acumuladas": 1160,
     "sobres_pendientes": {},
     "victorias": 10
   }
